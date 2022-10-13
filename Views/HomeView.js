@@ -2,8 +2,20 @@ import { StatusBar } from 'expo-status-bar';
 import * as React from 'react';
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import MapView, { Callout, Circle, Marker } from "react-native-maps"
-import MapManager from '../ViewModels/MapManager';
+import { GasStation } from '../Models/GasStation';
+import { User } from '../Models/User';
+import { MapManager } from '../ViewModels/MapManager';
 
+const gasStation = GasStation("CircleK", 20, 59.361631, 17.9604703)
+const gasStation1 = GasStation("Preem", 23, 59.360631, 17.957703)
+const gasStation2 = GasStation("ST1", 20, 59.361631, 17.958703)
+const gasStation3 = GasStation("Gulf", 23, 59.360631, 17.961703)
+
+const mapManager = MapManager(User("Jonas", 59.360931, 17.959703 ), Array(gasStation, gasStation1, gasStation2, gasStation3))
+console.log(mapManager.currentUser)
+mapManager.listOfGasStations.forEach(element => {
+  console.log(element.lat)
+});
 
 export default class Home extends React.Component {
   
@@ -13,19 +25,20 @@ export default class Home extends React.Component {
             <View style={{ marginTop: 0, flex: 1}}>
                   <MapView style={styles.map}
                     initialRegion={{
-                        latitude: 59.361631,
-                        longitude: 17.959703,
+                        latitude: mapManager.currentUser.lat,
+                        longitude: mapManager.currentUser.long,
                         latitudeDelta: 0.0085,
                         longitudeDelta: 0.005,
                     }}
-                    mapType="mutedStandard"
                     provider="google"
                     >
 
-                    <Marker coordinate={{ latitude: 59.361631, longitude: 17.959703 }} />
-                    <Circle center={{ latitude: 59.361631, longitude: 17.959703 }} radius={200} />
+                    <Marker coordinate={{ latitude: mapManager.currentUser.lat, longitude: mapManager.currentUser.long }} />
+                    <Circle center={{ latitude: mapManager.currentUser.lat, longitude: mapManager.currentUser.long }} radius={200} />
 
-                    <Marker coordinate={{ latitude: 37.78428, longitude: -122.4324 }} />
+                    {mapManager.listOfGasStations.map(n => (
+                      <Marker coordinate={{ latitude: n.lat, longitude: n.long }} pinColor="blue"/>
+                    ))}
 
                     </MapView>
             </View>
