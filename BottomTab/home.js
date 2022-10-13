@@ -1,12 +1,20 @@
 import { StatusBar } from 'expo-status-bar';
 import * as React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Dimensions, StyleSheet, Text, View } from 'react-native';
+import MapView from 'react-native-maps';
 
 export default class Home extends React.Component {
     render() {
         return (
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <Text>Home!</Text>
+            <View style={{ marginTop: 0, flex: 1}}>
+                  <MapView style={styles.map}
+                    initialRegion={{
+                        latitude: 37.78825,
+                        longitude: -122.4324,
+                        latitudeDelta: 0.0922,
+                        longitudeDelta: 0.0421,
+                    }}
+                    /> 
             </View>
         );
     }
@@ -24,12 +32,9 @@ export default class Home extends React.Component {
       color:'#212121',
       textAlign:'center'
     },
-    button: {
-      width:300,
-      borderRadius: 25,
-      backgroundColor:'#FCE4EC',
-      marginVertical: 10,
-      paddingVertical:16
+    map: {
+      width: Dimensions.get("window").width,
+      height: Dimensions.get("window").height
   
     }
   });
