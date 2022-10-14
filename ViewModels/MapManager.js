@@ -1,16 +1,25 @@
-import User from '../Models/User'
+import user from '../Models/User'
 import GasStation from '../Models/GasStation'
 
 
-class MapManager {
+// class MapManager {
 
-    currentUser = User()
-    listOfGasStations = new Array(GasStation)
+//     currentUser = User
+//     // listOfGasStations = new Array(GasStation)
 
-    constructor(currentUser) {
+//     constructor(currentUser) {
 
-        this.currentUser = currentUser
+//         this.currentUser = currentUser
         
-    }
+//     }
+// }
 
+//  export { MapManager}
+
+
+export const MapManager = (currentUser, listOfGasStations) => { 
+    return { 
+        currentUser: currentUser, 
+        listOfGasStations: listOfGasStations 
+    }
 }
