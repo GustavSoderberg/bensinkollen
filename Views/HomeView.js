@@ -6,13 +6,19 @@ import { GasStation } from '../Models/GasStation';
 import { User } from '../Models/User';
 import { MapManager } from '../ViewModels/MapManager';
 
-const gasStation = GasStation("CircleK", 20, 59.361631, 17.9604703)
-const gasStation1 = GasStation("Preem", 23, 59.360631, 17.957703)
-const gasStation2 = GasStation("ST1", 20, 59.361631, 17.958703)
-const gasStation3 = GasStation("Gulf", 23, 59.360631, 17.961703)
+const gasStation = GasStation(1,"CircleK", 20, 59.361631, 17.9604703)
+const gasStation1 = GasStation(2,"Preem", 23, 59.360631, 17.967703)
+const gasStation2 = GasStation(3,"ST1", 20, 59.361631, 17.958703)
+const gasStation3 = GasStation(4,"Gulf", 23, 59.360631, 17.961703)
 
-const mapManager = MapManager(User("Jonas", 59.360931, 17.959703 ), Array(gasStation, gasStation1, gasStation2, gasStation3))
+const mapManager = MapManager(User("Jonas", 59.360931, 17.959703 ), Array(
+  gasStation, 
+  gasStation1, 
+  gasStation2, 
+  gasStation3
+  ))
 console.log(mapManager.currentUser)
+
 mapManager.listOfGasStations.forEach(element => {
   console.log(element.lat)
 });
@@ -37,7 +43,7 @@ export default class Home extends React.Component {
                     <Circle center={{ latitude: mapManager.currentUser.lat, longitude: mapManager.currentUser.long }} radius={200} />
 
                     {mapManager.listOfGasStations.map(n => (
-                      <Marker coordinate={{ latitude: n.lat, longitude: n.long }} pinColor="blue"/>
+                      <Marker coordinate={{ latitude: n.lat, longitude: n.long }} pinColor="blue"><Callout><Text>{n.name}</Text></Callout></Marker>
                     ))}
 
                     </MapView>

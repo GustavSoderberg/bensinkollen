@@ -1,4 +1,4 @@
-// export class GasStation {
+// class GasStation {
 
 //     name = String()
 //     price = Float32Array()
@@ -17,4 +17,13 @@
 
 // }
 
-export const GasStation = (name, price, lat, long) => { return { name: name, price: price, lat: lat, long: long } }
+
+export const GasStation = (key, name, price, lat, long) => { 
+    return { 
+        key: key,
+        name: name, 
+        price: price, 
+        lat: lat, 
+        long: long 
+    } 
+}
