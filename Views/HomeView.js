@@ -23,11 +23,12 @@ export default class Home extends React.Component {
                         latitudeDelta: 0.0085,
                         longitudeDelta: 0.005,
                     }}
+                    showsUserLocation={true}
                     provider="google"
                     >
 
-                    <Marker coordinate={{ latitude: mapManager.currentUser.lat, longitude: mapManager.currentUser.long }} />
-                    <Circle center={{ latitude: mapManager.currentUser.lat, longitude: mapManager.currentUser.long }} radius={200} />
+                    {/* <Marker coordinate={{ latitude: mapManager.currentUser.lat, longitude: mapManager.currentUser.long }} /> */}
+                    <Circle center={{ latitude: mapManager.currentUser.lat, longitude: mapManager.currentUser.long }} radius={mapManager.currentUser.radius} />
 
                     {mapManager.listOfGasStations.map(n => (
                       <Marker coordinate={{ latitude: n.lat, longitude: n.long }} pinColor="blue"><Callout><Text>{n.name}</Text></Callout></Marker>

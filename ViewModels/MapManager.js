@@ -13,6 +13,15 @@ class MapManager {
         this.listOfGasStations = listOfGasStations
         
     }
+
+    updateSettings(radius, lat, long) {
+
+        this.currentUser.radius = radius
+        this.currentUser.lat = lat
+        this.currentUser.long = long
+        console.log(mapManager.currentUser)
+
+    }
 }
 
 const gasStation = GasStation(1, "CircleK", 20, 59.361631, 17.9604703)
@@ -20,7 +29,7 @@ const gasStation1 = GasStation(2, "Preem", 23, 59.360631, 17.957703)
 const gasStation2 = GasStation(3, "ST1", 20, 59.361631, 17.958703)
 const gasStation3 = GasStation(4, "Gulf", 23, 59.360631, 17.961703)
 
-const mapManager = new MapManager(User("Jonas", 59.360931, 17.959703 ), Array(
+const mapManager = new MapManager(User(200, 59.360931, 17.959703 ), Array(
   gasStation, 
   gasStation1, 
   gasStation2, 
