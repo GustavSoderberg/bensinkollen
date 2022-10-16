@@ -1,6 +1,6 @@
-export const User = (name, lat, long) => { 
+export const User = (radius, lat, long) => { 
     return { 
-        name: name, 
+        radius: radius, 
         lat: lat, 
         long: long 
     } 
