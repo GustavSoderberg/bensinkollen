@@ -67,6 +67,7 @@ async function getBensinmack() {
 
 export { getBensinmack }
 
+
  var listOfGasStations = Array(GasStation)
  var index = 0
 
@@ -81,28 +82,6 @@ export { getBensinmack }
 
     });
 
-
-    // for(var key in dict) {
-    //     const index = 0
-    //     console.log(key)
-    //     console.log(dict[key])
-
-    //     const response = await ( await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${key}&key=AIzaSyA4fCjf6PWnn1oZBtIsCytzt7mH6m3SKnQ`)).json()
-
-    //     console.log(response.results[0].types[5])
-    //     console.log(response.results)
-    //     response.results.forEach(result => {
-
-    //     result.address_components.forEach(element => {
-    //         console.log(element)
-    //     });
-    //     console.log(result.geometry.location.lat)
-    //     console.log(result.geometry.location.lng)
-    //     // const gasStation = GasStation(index,)
-    //     // index++
-        
-    //     });
-    // }
  }
  export { fetchStations }
 
@@ -111,18 +90,8 @@ export { getBensinmack }
     //TODO: We shall calculate distance between gas station and user here
     const gasStation = GasStation(index, station[0], station[2], json.results[0].geometry.location.lat, json.results[0].geometry.location.lng)
     index++
-    console.log(gasStation)
     
     listOfGasStations.push(gasStation)
     mapManager.updateGasStations(gasStation)
-
-
-    // if(stations.length == index-1) {
-    //     mapManager.updateGasStations(listOfGasStations)
-    //     console.log("Hej jag är klar")
-    // }
-    // else {
-    //     console.log("hej jag failade")
-    // }
 
  }

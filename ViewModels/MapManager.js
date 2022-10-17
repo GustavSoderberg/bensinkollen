@@ -1,6 +1,5 @@
 import { User } from '../Models/User';
 import { GasStation } from '../Models/GasStation'
-import { zoomlevel } from '../Views/HomeView'
 
 
 class MapManager {
@@ -26,7 +25,6 @@ class MapManager {
     updateGasStations(station) {
 
         this.listOfGasStations.push(station)
-        console.log(this.listOfGasStations.length)
 
     }
 }

@@ -20,8 +20,6 @@ stations.push(station2)
 stations.push(station3)
 stations.push(station4)
 fetchStations(stations)
-var zoomlevel = 1
-export { zoomlevel }
 
 export default class Home extends React.Component {
     render() {
@@ -32,8 +30,8 @@ export default class Home extends React.Component {
                     initialRegion={{
                         latitude: mapManager.currentUser.lat,
                         longitude: mapManager.currentUser.long,
-                        latitudeDelta: (0.2 * zoomlevel),
-                        longitudeDelta: (0.2 * zoomlevel),
+                        latitudeDelta: (0.2),
+                        longitudeDelta: (0.2),
                     }}
                     showsUserLocation={true}
                     provider="google"
