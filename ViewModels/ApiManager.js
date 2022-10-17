@@ -11,7 +11,7 @@ async function getBensinmack() {
 
     const sep = data.split(",");
 
-    for (let i = 0; i < sep.length - 1; i++) {
+    for (let i = 0; i < 10; i++) {
         
         sep[i] = sep[i].replace(/["{}]/g, "");
 
@@ -66,7 +66,7 @@ async function getBensinmack() {
 }
 
 export { getBensinmack }
- 
+
 
  var listOfGasStations = Array(GasStation)
  var index = 0
