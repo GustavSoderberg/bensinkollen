@@ -1,12 +1,37 @@
 import { StatusBar } from 'expo-status-bar';
-import * as React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { SafeAreaView, Button, Alert,StyleSheet, Text, TextInput, View } from 'react-native';
+import { mapManager } from '../ViewModels/MapManager';
 
 export default class Home extends React.Component {
     render() {
         return (
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <Text>Settings!</Text>
+                <SafeAreaView>
+                 <TextInput
+                  style={styles.input}
+                  value={mapManager.currentUser.radius.toString()}
+                  onChangeText={(text) => mapManager.updateSettings({text}, mapManager.currentUser.lat, mapManager.currentUser.long)}
+                  placeholder="Radius"
+                  keyboardType="numeric"
+                  />
+                <TextInput
+                  style={styles.input}
+                  value={mapManager.currentUser.lat.toString()}
+                  placeholder="Lat"
+                  keyboardType="numeric"
+                  />
+                <TextInput
+                  style={styles.input}
+                  value={mapManager.currentUser.long.toString()}
+                  placeholder="Long"
+                  keyboardType="numeric"
+                  />
+               <Button 
+                 title='Save'
+                 onPress={() => (console.log(mapManager))}
+                 />
+                </SafeAreaView>
             </View>
         );
     }
@@ -31,5 +56,11 @@ export default class Home extends React.Component {
       marginVertical: 10,
       paddingVertical:16
   
+    },
+    input: {
+      height: 40,
+      margin: 12,
+      borderWidth: 1,
+      padding: 10,
     }
   });

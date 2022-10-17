@@ -1,25 +1,36 @@
-import user from '../Models/User'
-import GasStation from '../Models/GasStation'
+import { User } from '../Models/User';
+import { GasStation } from '../Models/GasStation'
 
 
-// class MapManager {
+class MapManager {
 
-//     currentUser = User
-//     // listOfGasStations = new Array(GasStation)
+    currentUser = User
+    listOfGasStations = new Array(GasStation)
 
-//     constructor(currentUser) {
+    constructor(currentUser) {
 
-//         this.currentUser = currentUser
+        this.currentUser = currentUser
         
-//     }
-// }
+    }
 
-//  export { MapManager}
+    updateSettings(radius, lat, long) {
 
+        this.currentUser.radius = radius
+        this.currentUser.lat = lat
+        this.currentUser.long = long
+        console.log(mapManager.currentUser)
 
-export const MapManager = (currentUser, listOfGasStations) => { 
-    return { 
-        currentUser: currentUser, 
-        listOfGasStations: listOfGasStations 
+    }
+
+    updateGasStations(station) {
+
+        this.listOfGasStations.push(station)
+
     }
 }
+
+
+
+const mapManager = new MapManager(User(5000, 59.868125, 17.659776))
+
+export { mapManager }

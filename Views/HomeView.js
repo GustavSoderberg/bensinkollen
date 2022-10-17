@@ -2,33 +2,26 @@ import { StatusBar } from 'expo-status-bar';
 import * as React from 'react';
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import MapView, { Callout, Circle, Marker } from "react-native-maps"
-import { GasStation } from '../Models/GasStation';
-import { User } from '../Models/User';
-import { MapManager } from '../ViewModels/MapManager';
 
-import { ApiManager, getBensinmack } from '../ViewModels/ApiManager'
+import { mapManager } from '../ViewModels/MapManager';
+import { ApiManager, getBensinmack, fetchStations } from '../ViewModels/ApiManager'
 
-const gasStation = GasStation(1,"CircleK", 20, 59.361631, 17.9604703)
-const gasStation1 = GasStation(2,"Preem", 23, 59.360631, 17.967703)
-const gasStation2 = GasStation(3,"ST1", 20, 59.361631, 17.958703)
-const gasStation3 = GasStation(4,"Gulf", 23, 59.360631, 17.961703)
 
-const mapManager = MapManager(User("Jonas", 59.360931, 17.959703 ), Array(
-  gasStation, 
-  gasStation1, 
-  gasStation2, 
-  gasStation3
-  ))
-console.log(mapManager.currentUser)
-
-mapManager.listOfGasStations.forEach(element => {
-  console.log(element.lat)
-});
 
 getBensinmack()
 
+var stations = Array()
+const station1 = ["OKQ8","Årstagatan 5-7, 754 34 Uppsala", "123"]
+const station2 = ["Preem","Gärdets Bilgata 38, 754 20 Uppsala", "23"]
+const station3 = ["Circle K","Gränby Bilgata 2, 754 31 Uppsala", "22.23"]
+const station4 = ["Shell","Vaksalagatan 85, 753 31 Uppsala", "200"]
+stations.push(station1)
+stations.push(station2)
+stations.push(station3)
+stations.push(station4)
+fetchStations(stations)
+
 export default class Home extends React.Component {
-  
     render() {
 
         return (
@@ -37,14 +30,18 @@ export default class Home extends React.Component {
                     initialRegion={{
                         latitude: mapManager.currentUser.lat,
                         longitude: mapManager.currentUser.long,
-                        latitudeDelta: 0.0085,
-                        longitudeDelta: 0.005,
+                        latitudeDelta: (0.2),
+                        longitudeDelta: (0.2),
                     }}
+                    showsUserLocation={true}
                     provider="google"
                     >
 
-                    <Marker coordinate={{ latitude: mapManager.currentUser.lat, longitude: mapManager.currentUser.long }} />
-                    <Circle center={{ latitude: mapManager.currentUser.lat, longitude: mapManager.currentUser.long }} radius={200} />
+                    {/* <Marker coordinate={{ latitude: mapManager.currentUser.lat, longitude: mapManager.currentUser.long }} /> */}
+                    
+                      <Circle center={{ latitude: mapManager.currentUser.lat, longitude: mapManager.currentUser.long }} radius={mapManager.currentUser.radius} />
+                    
+                    
 
                     {mapManager.listOfGasStations.map(n => (
                       <Marker coordinate={{ latitude: n.lat, longitude: n.long }} pinColor="blue"><Callout><Text>{n.name}</Text></Callout></Marker>
@@ -55,6 +52,7 @@ export default class Home extends React.Component {
         );
     }
   }
+  
   
   const styles = StyleSheet.create({
     container: {
@@ -73,4 +71,4 @@ export default class Home extends React.Component {
       height: Dimensions.get("window").height
   
     }
-  });
+  })
