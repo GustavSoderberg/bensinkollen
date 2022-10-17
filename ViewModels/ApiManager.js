@@ -75,7 +75,7 @@ export { getBensinmack }
 
     stations.forEach(array => {
         
-    fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${array[0] + " " + array[1]}&key=AIzaSyA4fCjf6PWnn1oZBtIsCytzt7mH6m3SKnQ`)
+    fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${array[0] + " " + array[1]}&key=AIzaSyD277SAgiNn-6NP0r3hFPzpduhVc2IVsxY`)
      .then((array) => array.json())
      .then(json => createGasStation(json, array))
      .catch(error => console.log(error))
