@@ -9,10 +9,11 @@ import { mapManager } from './MapManager';
 async function getBensinmack() {
 
     const data = await (await fetch('https://henrikhjelm.se/api/getdata.php?lan=stockholms-lan')).text()
-
+    console.log(data)
     const sep = data.split(",");
 
-    for (let i = 0; i < 10; i++) {
+
+    for (let i = 0; i < sep.length; i++) {
         
         sep[i] = sep[i].replace(/["{}]/g, "");
 
@@ -59,7 +60,7 @@ async function getBensinmack() {
         // }
         // console.log("---------------------")
         // console.log("*********************")
-        // console.log("---------------------")
+        // console.log("---------------------")r
 
     }
     console.log(sep.length)
