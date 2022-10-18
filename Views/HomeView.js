@@ -12,15 +12,15 @@ import { settings } from '../Models/Settings';
 getBensinmack()
 
 var stations = Array()
-const station1 = ["OKQ8","Årstagatan 5-7, 754 34 Uppsala", "123"]
-const station2 = ["Preem","Gärdets Bilgata 38, 754 20 Uppsala", "23"]
-const station3 = ["Circle K","Gränby Bilgata 2, 754 31 Uppsala", "22.23"]
-const station4 = ["Shell","Vaksalagatan 85, 753 31 Uppsala", "200"]
+const station1 = ["OKQ8","Årstagatan 5-7, 754 34 Uppsala", "44.44"]
+const station2 = ["Preem","Gärdets Bilgata 38, 754 20 Uppsala", "11.11"]
+const station3 = ["Circle K","Gränby Bilgata 2, 754 31 Uppsala", "22.22"]
+const station4 = ["Shell","Vaksalagatan 85, 753 31 Uppsala", "33.33"]
 stations.push(station1)
 stations.push(station2)
 stations.push(station3)
 stations.push(station4)
-fetchStations(stations)
+//fetchStations(stations)
 
 export default class Home extends React.Component {
     render() {
@@ -45,7 +45,7 @@ export default class Home extends React.Component {
                     
 
                     {mapManager.listOfGasStations.map(n => (
-                      <Marker coordinate={{ latitude: n.lat, longitude: n.long }} pinColor="blue"><Image source={require('../assets/logos/circlek_pin.png')} style={{ width: 25, height: 43.3 }} /><Callout><Text style={{ width: 50, height:  50 }}>{n.name + "\n" + n.price}</Text></Callout></Marker>
+                      <Marker coordinate={{ latitude: n.lat, longitude: n.long }} pinColor="blue"><Image source={n.logo} style={{ width: 25, height: 43.3 }} /><Callout><Text style={{ width: 50, height:  50 }}>{n.name + "\n" + n.price}</Text></Callout></Marker>
                     ))}
 
                     </MapView>

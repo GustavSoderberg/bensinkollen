@@ -26,6 +26,7 @@ class MapManager {
     updateGasStations(station) {
 
         this.listOfGasStations.push(station)
+        console.log(station)
 
     }
 
