@@ -1,5 +1,6 @@
 import { User } from '../Models/User';
 import { GasStation } from '../Models/GasStation'
+import { settings } from '../Models/Settings';
 
 
 class MapManager {
@@ -31,6 +32,6 @@ class MapManager {
 
 
 
-const mapManager = new MapManager(User(5000, 59.868125, 17.659776))
+const mapManager = new MapManager(User(59.868125, 17.659776))
 
 export { mapManager }
