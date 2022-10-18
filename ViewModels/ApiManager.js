@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, FlatList, Text, View } from 'react-native';
 import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
+import { settings } from '../Models/Settings';
 import { GasStation } from '../Models/GasStation';
 import { mapManager } from './MapManager';
 
@@ -75,7 +76,7 @@ export { getBensinmack }
 
     stations.forEach(array => {
         
-    fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${array[0] + " " + array[1]}&key=AIzaSyD277SAgiNn-6NP0r3hFPzpduhVc2IVsxY`)
+    fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${array[0] + " " + array[1]}&key=${settings.APIKeyGoogleGeocoding}`)
      .then((array) => array.json())
      .then(json => createGasStation(json, array))
      .catch(error => console.log(error))
