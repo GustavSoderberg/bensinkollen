@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, FlatList, Text, View } from 'react-native';
+import { Image, ActivityIndicator, FlatList, Text, View } from 'react-native';
 import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
 import { settings } from '../Models/Settings';
 import { GasStation } from '../Models/GasStation';
@@ -77,7 +77,7 @@ export { getBensinmack }
 
     stations.forEach(array => {
         
-    fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${array[0] + " " + array[1]}&key=${settings.ApiKeyGoogle}`)
+    fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${array[0]}%20${array[1]}&key=${settings.ApiKeyGoogle}`)
      .then((array) => array.json())
      .then(json => createGasStation(json, array))
      .catch(error => console.log(error))
@@ -89,8 +89,32 @@ export { getBensinmack }
 
  function createGasStation(json, station) {
 
+    var logo = require('../assets/logos/circlek_pin.png')
+    switch (station[0]) {
+        case 'Circle K':
+            logo = require('../assets/logos/circlek_pin.png')
+            break;
+        case 'OKQ8':
+            logo = require('../assets/logos/okq8.png')
+            break;
+        case 'Preem':
+            logo = require('../assets/logos/preem_pin.png')
+            break;
+        case 'Shell':
+            logo = require('../assets/logos/shell.png')
+            break;
+        case 'ST1':
+            logo = require('../assets/logos/okq8.png')
+            break;
+        default:
+            logo = require('../assets/logos/circlek_pin.png')
+            break;
+      }
+      
+
+
     //TODO: We shall calculate distance between gas station and user here
-    const gasStation = GasStation(index, station[0], station[2], json.results[0].geometry.location.lat, json.results[0].geometry.location.lng)
+    const gasStation = GasStation(index, logo, station[0], station[2], json.results[0].geometry.location.lat, json.results[0].geometry.location.lng)
     index++
     
     listOfGasStations.push(gasStation)
