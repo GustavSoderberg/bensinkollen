@@ -44,9 +44,9 @@ export default class Home extends React.Component {
                     
                     
 
-                    {mapManager.listOfGasStations.map(n => (
+                    {/* {mapManager.listOfGasStations.map(n => (
                       <Marker coordinate={{ latitude: n.lat, longitude: n.long }} pinColor="blue"><Image source={n.logo} style={{ width: 25, height: 43.3 }} /><Callout><Text style={{ width: 50, height:  50 }}>{n.name + "\n" + n.price}</Text></Callout></Marker>
-                    ))}
+                    ))} */}
 
                     </MapView>
             </View>
