@@ -70,7 +70,7 @@ async function getBensinmack() {
     const gasStationTemplate = GasStation(
     "stockholmslan",             // Region
     "OKQ8",                      // Name
-    "Huddinge Agestavagen 2",     // Address 
+    "Huddinge Agestavagen 2",    // Address 
     {
         "95":"22.12",            //      Dictionary
         "diesel":"28.27"         // "gas type" : "price"
