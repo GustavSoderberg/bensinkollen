@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import { SafeAreaView, Button, Alert,StyleSheet, Text, TextInput, View } from 'react-native';
 import { mapManager } from '../ViewModels/MapManager';
+import { settings } from '../Models/Settings'
 
 export default class Home extends React.Component {
     render() {
@@ -9,9 +10,8 @@ export default class Home extends React.Component {
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                 <SafeAreaView>
                  <TextInput
+                  value={settings.RadiusCircle.toString()}
                   style={styles.input}
-                  value={mapManager.currentUser.radius.toString()}
-                  onChangeText={(text) => mapManager.updateSettings({text}, mapManager.currentUser.lat, mapManager.currentUser.long)}
                   placeholder="Radius"
                   keyboardType="numeric"
                   />

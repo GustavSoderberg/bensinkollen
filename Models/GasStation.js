@@ -3,7 +3,7 @@ export const GasStation = (key, name, price, lat, long) => {
         key: key,
         name: name, 
         price: price, 
-        lat: lat, 
+        lat: lat,
         long: long 
     } 
 }

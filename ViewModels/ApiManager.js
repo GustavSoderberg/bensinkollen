@@ -9,10 +9,11 @@ import { mapManager } from './MapManager';
 async function getBensinmack() {
 
     const data = await (await fetch('https://henrikhjelm.se/api/getdata.php?lan=stockholms-lan')).text()
-
+    console.log(data)
     const sep = data.split(",");
 
-    for (let i = 0; i < 10; i++) {
+
+    for (let i = 0; i < sep.length; i++) {
         
         sep[i] = sep[i].replace(/["{}]/g, "");
 
@@ -59,7 +60,7 @@ async function getBensinmack() {
         // }
         // console.log("---------------------")
         // console.log("*********************")
-        // console.log("---------------------")
+        // console.log("---------------------")r
 
     }
     console.log(sep.length)
@@ -76,7 +77,7 @@ export { getBensinmack }
 
     stations.forEach(array => {
         
-    fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${array[0] + " " + array[1]}&key=${settings.APIKeyGoogleGeocoding}`)
+    fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${array[0] + " " + array[1]}&key=${settings.ApiKeyGoogle}`)
      .then((array) => array.json())
      .then(json => createGasStation(json, array))
      .catch(error => console.log(error))
@@ -95,4 +96,7 @@ export { getBensinmack }
     listOfGasStations.push(gasStation)
     mapManager.updateGasStations(gasStation)
 
+    
+
  }
+

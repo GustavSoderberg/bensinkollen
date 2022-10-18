@@ -1,10 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import * as React from 'react';
-import { Dimensions, StyleSheet, Text, View } from 'react-native';
+import { Image, Dimensions, StyleSheet, Text, View } from 'react-native';
 import MapView, { Callout, Circle, Marker } from "react-native-maps"
 
 import { mapManager } from '../ViewModels/MapManager';
 import { ApiManager, getBensinmack, fetchStations } from '../ViewModels/ApiManager'
+import { settings } from '../Models/Settings';
 
 
 
@@ -28,10 +29,10 @@ export default class Home extends React.Component {
             <View style={{ marginTop: 0, flex: 1}}>
                   <MapView style={styles.map}
                     initialRegion={{
-                        latitude: mapManager.currentUser.lat,
-                        longitude: mapManager.currentUser.long,
-                        latitudeDelta: (0.2),
-                        longitudeDelta: (0.2),
+                        latitude: (mapManager.currentUser.lat),
+                        longitude: (mapManager.currentUser.long),
+                        latitudeDelta: ((settings.LatDelta*settings.RadiusConstant)),
+                        longitudeDelta: ((settings.LngDelta*settings.RadiusConstant)),
                     }}
                     showsUserLocation={true}
                     provider="google"
@@ -39,12 +40,12 @@ export default class Home extends React.Component {
 
                     {/* <Marker coordinate={{ latitude: mapManager.currentUser.lat, longitude: mapManager.currentUser.long }} /> */}
                     
-                      <Circle center={{ latitude: mapManager.currentUser.lat, longitude: mapManager.currentUser.long }} radius={mapManager.currentUser.radius} />
+                      <Circle center={{ latitude: mapManager.currentUser.lat, longitude: mapManager.currentUser.long }} radius={(settings.RadiusCircle*settings.RadiusConstant)} />
                     
                     
 
                     {mapManager.listOfGasStations.map(n => (
-                      <Marker coordinate={{ latitude: n.lat, longitude: n.long }} pinColor="blue"><Callout><Text>{n.name}</Text></Callout></Marker>
+                      <Marker coordinate={{ latitude: n.lat, longitude: n.long }} pinColor="blue"><Image source={require('../assets/logos/circlek_pin.png')} style={{ width: 25, height: 43.3 }} /><Callout><Text style={{ width: 50, height:  50 }}>{n.name + "\n" + n.price}</Text></Callout></Marker>
                     ))}
 
                     </MapView>
