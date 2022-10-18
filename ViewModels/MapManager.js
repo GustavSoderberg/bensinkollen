@@ -23,15 +23,42 @@ class MapManager {
 
     }
 
-    updateGasStations(station) {
+    updateGasStations( ) {
 
         this.listOfGasStations.push(station)
 
     }
+
+    initialize() {
+
+        if (localStorage.getItem("bensinkollen") === null) {
+
+            const mapManager = new MapManager(User(59.868125, 17.659776))
+
+        }
+
+        else {
+
+            fromlocal = JSON.parse(localStorage.getItem('bensinkollen'))
+
+            const mapManager = new MapManager()
+
+        }
+
+    }
+
+    load() {
+
+    }
+    
+    update() {
+
+    }
+
 }
 
 
 
-const mapManager = new MapManager(User(59.868125, 17.659776))
+
 
 export { mapManager }
