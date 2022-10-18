@@ -23,7 +23,7 @@ class MapManager {
 
     }
 
-    updateGasStations( ) {
+    updateGasStations(station) {
 
         this.listOfGasStations.push(station)
 
