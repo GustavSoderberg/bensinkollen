@@ -84,26 +84,22 @@ async function getBensinmack() {
     }
     console.log(sep.length)
 
-    //Template for GasStation obj + for loop for iterating through dictionary
+    //Template for GasStation obj
     const gasStationTemplate = GasStation(
     "stockholmslan",             // Region
     "OKQ8",                      // Name
     "Huddinge Agestavagen 2",    // Address 
-    {
-        "95":"22.12",            //      Dictionary
-        "diesel":"28.27"         // "gas type" : "price"
-    },
+    [
+        ["95", "diesel"],        //   Nested array
+        ["22.12", "28.27"]       //   [["gas_type1", "gas_type2"], ["price_type1", "price_type2"]]
+    ],
     null,                        // logo
     null,                        // lat
     null)                        // long
-    
-    console.log(gasStationTemplate)
-    for (const [key, value] of Object.entries(gasStationTemplate.type)) {
-        console.log(key, value);
-      }
 
     //End of template
 
+    console.log(gasStationTemplate)
 }
 
 export { getBensinmack }
@@ -131,7 +127,7 @@ export { getBensinmack }
  function createGasStation(json, station) {
 
 
-    var logo = require('../assets/logos/circlek_pin.png')
+    var logo = require('../assets/logos/default_pin.png')
     switch (station[0]) {
         case 'Circle K':
             logo = require('../assets/logos/circlek_pin.png')
