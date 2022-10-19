@@ -4,7 +4,7 @@ import { Image, Dimensions, StyleSheet, Text, View, ScrollView } from 'react-nat
 import MapView, { Callout, Circle, Marker } from "react-native-maps"
 
 import { mapManager } from '../ViewModels/MapManager';
-import { ApiManager, getBensinmack, fetchStations } from '../ViewModels/ApiManager'
+import { ApiManager, getBensinmack, fetchStations, apiManager } from '../ViewModels/ApiManager'
 import { settings } from '../Models/Settings';
 
 import DropdownComponent from './DropDownView';
@@ -13,7 +13,8 @@ import DropdownComponent from './DropDownView';
 
 
 
-getBensinmack()
+//getBensinmack()
+mapManager.initialize()
 
 var stations = Array()
 const station1 = ["Ingo","Nämndemansvägen 2, 757 57 Uppsala", "44.44"]
