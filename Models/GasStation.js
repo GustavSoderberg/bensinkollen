@@ -1,9 +1,12 @@
-export const GasStation = (key, name, price, lat, long) => { 
+export const GasStation = (region, name, address, types, logo, lat, long) => { 
     return { 
-        key: key,
+        
+        region: region,
         name: name, 
-        price: price, 
-        lat: lat, 
+        address: address,
+        types: types, 
+        logo: logo,
+        lat: lat,
         long: long 
     } 
 }
