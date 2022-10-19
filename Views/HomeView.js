@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import * as React from 'react';
-import { Image, Dimensions, StyleSheet, Text, View } from 'react-native';
+import { Dimensions, StyleSheet, View } from 'react-native';
 import MapView, { Callout, Circle, Marker } from "react-native-maps"
 
 import { mapManager } from '../ViewModels/MapManager';
@@ -12,14 +12,22 @@ import { settings } from '../Models/Settings';
 getBensinmack()
 
 var stations = Array()
-const station1 = ["OKQ8","Årstagatan 5-7, 754 34 Uppsala", "44.44"]
-const station2 = ["Preem","Gärdets Bilgata 38, 754 20 Uppsala", "11.11"]
-const station3 = ["Circle K","Gränby Bilgata 2, 754 31 Uppsala", "22.22"]
+const station1 = ["Ingo","Nämndemansvägen 2, 757 57 Uppsala", "44.44"]
+const station2 = ["OKQ8","Svartbäcksgatan 69, 753 33 Uppsala", "11.11"]
+const station3 = ["ST1","Klangs gränd 2, 752 33 Uppsala", "22.22"]
 const station4 = ["Shell","Vaksalagatan 85, 753 31 Uppsala", "33.33"]
+const station5 = ["OKQ8","Skebogatan 2, 752 28 Uppsala", "33.33"]
+const station6 = ["Circle K","Gamla Uppsalagatan 48, 754 25 Uppsala", "33.33"]
+const station7 = ["Ingo","Kungsgatan 72, 753 21 Uppsala", "33.33"]
+const station8 = ["Preem","Marmorvägen 2, 752 44 Uppsala", "33.33"]
 stations.push(station1)
 stations.push(station2)
 stations.push(station3)
 stations.push(station4)
+stations.push(station5)
+stations.push(station6)
+stations.push(station7)
+stations.push(station8)
 //fetchStations(stations)
 
 export default class Home extends React.Component {
@@ -31,8 +39,8 @@ export default class Home extends React.Component {
                     initialRegion={{
                         latitude: (mapManager.currentUser.lat),
                         longitude: (mapManager.currentUser.long),
-                        latitudeDelta: ((settings.LatDelta*settings.RadiusConstant)),
-                        longitudeDelta: ((settings.LngDelta*settings.RadiusConstant)),
+                        latitudeDelta: ((settings.LatDelta)),
+                        longitudeDelta: ((settings.LngDelta)),
                     }}
                     showsUserLocation={true}
                     provider="google"
@@ -40,12 +48,12 @@ export default class Home extends React.Component {
 
                     {/* <Marker coordinate={{ latitude: mapManager.currentUser.lat, longitude: mapManager.currentUser.long }} /> */}
                     
-                      <Circle center={{ latitude: mapManager.currentUser.lat, longitude: mapManager.currentUser.long }} radius={(settings.RadiusCircle*settings.RadiusConstant)} />
+                      <Circle center={{ latitude: mapManager.currentUser.lat, longitude: mapManager.currentUser.long }} radius={(settings.RadiusCircle)} />
                     
                     
 
                     {/* {mapManager.listOfGasStations.map(n => (
-                      <Marker coordinate={{ latitude: n.lat, longitude: n.long }} pinColor="blue"><Image source={n.logo} style={{ width: 25, height: 43.3 }} /><Callout><Text style={{ width: 50, height:  50 }}>{n.name + "\n" + n.price}</Text></Callout></Marker>
+                      <Marker coordinate={{ latitude: n.lat, longitude: n.long }} pinColor="blue"><Image source={n.logo} style={{ width: settings.LogoWidth, height: settings.LogoHeight }} /><Callout><Text style={{ width: 50, height:  50 }}>{n.name + "\n" + "some more text here"}</Text></Callout></Marker>
                     ))} */}
 
                     </MapView>
