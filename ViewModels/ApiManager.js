@@ -115,28 +115,31 @@ export { getBensinmack }
         case 'Circle K':
             logo = require('../assets/logos/circlek_pin.png')
             break;
+        case 'Ingo':
+            logo = require('../assets/logos/ingo_pin.png')
+            break;
         case 'OKQ8':
-            logo = require('../assets/logos/okq8.png')
+            logo = require('../assets/logos/okq8_pin.png')
+            break;
+        case 'ST1':
+            logo = require('../assets/logos/st1_pin.png')
+            break;
+        case 'Tanka':
+            logo = require('../assets/logos/tanka_pin.png')
             break;
         case 'Preem':
             logo = require('../assets/logos/preem_pin.png')
             break;
-        case 'Shell':
-            logo = require('../assets/logos/shell.png')
-            break;
-        case 'ST1':
-            logo = require('../assets/logos/okq8.png')
-            break;
         default:
-            logo = require('../assets/logos/circlek_pin.png')
+            logo = require('../assets/logos/default_pin.png')
             break;
       }
       
 
 
     //TODO: We shall calculate distance between gas station and user here
-    //const gasStation = GasStation(index, logo, station[0], station[2], json.results[0].geometry.location.lat, json.results[0].geometry.location.lng)
-    const gasStation = GasStation("stockholmslan", "OKQ8", "HuddingeAgestavagen 2",{"95":"22.12","diesel":"28.27"}, "28.27", logo, json.results[0].geometry.location.lat, json.results[0].geometry.location.lng)
+    const gasStation = GasStation("stockholmslan", station[0], station[1], {"95":"22.12","diesel":"28.27"}, logo, json.results[0].geometry.location.lat, json.results[0].geometry.location.lng)
+    const gasStation1 = GasStation("stockholmslan", "OKQ8", "HuddingeAgestavagen 2",{"95":"22.12","diesel":"28.27"}, "28.27", logo, json.results[0].geometry.location.lat, json.results[0].geometry.location.lng)
     index++
     
     listOfGasStations.push(gasStation)
