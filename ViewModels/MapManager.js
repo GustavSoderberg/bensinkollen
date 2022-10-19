@@ -1,5 +1,6 @@
 import { User } from '../Models/User';
 import { GasStation } from '../Models/GasStation'
+import { apiManager, fetchStations } from './ApiManager'
 
 
 class MapManager {
@@ -25,27 +26,45 @@ class MapManager {
     updateGasStations(station) {
 
         this.listOfGasStations.push(station)
-        console.log(station)
+        // console.log(station)
 
     }
 
-    // initialize() {
+    initialize() {
 
-    //     if (localStorage.getItem("bensinkollen") === null) {
+        // const fetchedStations = Object.assign(apiManager.getBensinmack())
+        
+        // map
+        
 
-    //         const mapManager = new MapManager(User(59.868125, 17.659776))
 
-    //     }
+        // if (localStorage.getItem("bensinkollen") === null) {
 
-    //     else {
+        //     const mapManager = new MapManager(User(59.868125, 17.659776))
 
-    //         fromlocal = JSON.parse(localStorage.getItem('bensinkollen'))
+            
+        //     //create gasStation objects
+        //     //fetch google api
+        //     //update each station with lat + lng coordinates
+        //     //save to this.listOfGasStations
 
-    //         const mapManager = new MapManager()
+        // }
 
-    //     }
+        // else {
 
-    // }
+        //     var fromlocal = JSON.parse(localStorage.getItem('bensinkollen'))
+
+        //     const mapManager = new MapManager()
+
+        //     //fetch henriks api
+        //     //create gasStation objects
+        //     //compare gastype/prices to already existing localstorage stations
+        //     //IF there's new/removed stations, update accordingly
+        //     //populate mapManager with already existing stations
+
+        // }
+
+    }
 
     // load() {
 

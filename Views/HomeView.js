@@ -4,12 +4,13 @@ import { Dimensions, StyleSheet, View, Image, Text} from 'react-native';
 import MapView, { Callout, Circle, Marker } from "react-native-maps"
 
 import { mapManager } from '../ViewModels/MapManager';
-import { ApiManager, getBensinmack, fetchStations } from '../ViewModels/ApiManager'
+import { ApiManager, getBensinmack, fetchStations, apiManager } from '../ViewModels/ApiManager'
 import { settings } from '../Models/Settings';
 
 
 
-getBensinmack()
+//getBensinmack()
+mapManager.initialize()
 
 var stations = Array()
 const station1 = ["Ingo","Nämndemansvägen 2, 757 57 Uppsala", "44.44"]
