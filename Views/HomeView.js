@@ -1,11 +1,15 @@
 import { StatusBar } from 'expo-status-bar';
 import * as React from 'react';
-import { Image, Dimensions, StyleSheet, Text, View } from 'react-native';
+import { Image, Dimensions, StyleSheet, Text, View, ScrollView } from 'react-native';
 import MapView, { Callout, Circle, Marker } from "react-native-maps"
 
 import { mapManager } from '../ViewModels/MapManager';
 import { ApiManager, getBensinmack, fetchStations } from '../ViewModels/ApiManager'
 import { settings } from '../Models/Settings';
+
+import DropdownComponent from './DropDownView';
+
+
 
 
 
@@ -34,7 +38,10 @@ export default class Home extends React.Component {
     render() {
 
         return (
-            <View style={{ marginTop: 0, flex: 1}}>
+            <ScrollView style={{ marginTop: 0}}>
+
+                <DropdownComponent/>
+
                   <MapView style={styles.map}
                     initialRegion={{
                         latitude: (mapManager.currentUser.lat),
@@ -49,15 +56,13 @@ export default class Home extends React.Component {
                     {/* <Marker coordinate={{ latitude: mapManager.currentUser.lat, longitude: mapManager.currentUser.long }} /> */}
                     
                       <Circle center={{ latitude: mapManager.currentUser.lat, longitude: mapManager.currentUser.long }} radius={(settings.RadiusCircle)} />
-                    
-                    
 
                     {mapManager.listOfGasStations.map(n => (
                       <Marker coordinate={{ latitude: n.lat, longitude: n.long }} pinColor="blue"><Image source={n.logo} style={{ width: settings.LogoWidth, height: settings.LogoHeight }} /><Callout><Text style={{ width: 50, height:  50 }}>{n.name + "\n" + "some more text here"}</Text></Callout></Marker>
                     ))}
 
                     </MapView>
-            </View>
+            </ScrollView>
         );
     }
   }
@@ -65,7 +70,7 @@ export default class Home extends React.Component {
   
   const styles = StyleSheet.create({
     container: {
-      flex: 1,
+      zIndex: 80,
       alignItems: 'center',
       justifyContent: 'center',
     },
