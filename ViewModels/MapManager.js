@@ -1,6 +1,5 @@
 import { User } from '../Models/User';
 import { GasStation } from '../Models/GasStation'
-import { settings } from '../Models/Settings';
 
 
 class MapManager {

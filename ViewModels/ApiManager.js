@@ -1,6 +1,3 @@
-import React, { useEffect, useState } from 'react';
-import { Image, ActivityIndicator, FlatList, Text, View } from 'react-native';
-import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
 import { settings } from '../Models/Settings';
 import { GasStation } from '../Models/GasStation';
 import { mapManager } from './MapManager';
@@ -77,43 +74,58 @@ async function getBensinmack() {
 
 
     sep.splice(sep.length - 1, 1)
-    for (let i = 0; i < sep.length; i++){
-        for (let l = 0; l < sep[i].length; l++) {
-            console.log(sep[i][l]);
-       }
-       console.log("---------------------")
-       console.log("*********************")
-       console.log("---------------------")
-    }
+    // for (let i = 0; i < sep.length; i++){
+    //     for (let l = 0; l < sep[i].length; l++) {
+    //         console.log(sep[i][l]);
+    //    }
+    //    console.log("---------------------")
+    //    console.log("*********************")
+    //    console.log("---------------------")
+    // }
     console.log(sep.length)
 
-    //Template for GasStation obj + for loop for iterating through dictionary
-    const gasStationTemplate = GasStation(
-    "stockholmslan",             // Region
-    "OKQ8",                      // Name
-    "Huddinge Agestavagen 2",    // Address 
-    {
-        "95":"22.12",            //      Dictionary
-        "diesel":"28.27"         // "gas type" : "price"
-    },
-    null,                        // logo
-    null,                        // lat
-    null)                        // long
-    
-    console.log(gasStationTemplate)
-    for (const [key, value] of Object.entries(gasStationTemplate.type)) {
-        console.log(key, value);
-      }
+    const gasStationList = []
+    for (let i = 0; i < sep.length; i++) {
+        var tempGasList = []
+        for (let l = 0; l < sep[i][3][0].length; l++){
+            tempGasList.push([sep[i][3][0][l], sep[i][3][1][l]])
+        }
+        const newGasStation = GasStation(
+            sep[i][0],              // Region
+            sep[i][1],              // Name
+            sep[i][2],              // Address 
+            tempGasList,            // gasTypes
+            null,                   // logo
+            "0",                    // lat
+            null)     
+            gasStationList.push(newGasStation)
+    }
+
+    for (let i = 0; i < gasStationList.length; i++){
+        console.log(gasStationList[i])
+    }
+    //console.log(gasStationList)
+
+    //Template for GasStation obj
+    // const gasStationTemplate = GasStation(
+    // "stockholmslan",             // Region
+    // "OKQ8",                      // Name
+    // "Huddinge Agestavagen 2",    // Address 
+    // [
+    //     ["95", "diesel"],        //   Nested array
+    //     ["22.12", "28.27"]       //   [["gas_type1", "gas_type2"], ["price_type1", "price_type2"]]
+    // ],
+    // null,                        // logo
+    // null,                        // lat
+    // null)                        // long
 
     //End of template
-
 }
 
 export { getBensinmack }
 
 
  var listOfGasStations = Array(GasStation)
- var index = 0
 
  async function fetchStations(stations) {
 
@@ -135,7 +147,7 @@ export { getBensinmack }
  function createGasStation(json, station) {
 
 
-    var logo = require('../assets/logos/circlek_pin.png')
+    var logo = require('../assets/logos/default_pin.png')
     switch (station[0]) {
         case 'Circle K':
             logo = require('../assets/logos/circlek_pin.png')
@@ -165,7 +177,6 @@ export { getBensinmack }
     //TODO: We shall calculate distance between gas station and user here
     const gasStation = GasStation("stockholmslan", station[0], station[1], {"95":"22.12","diesel":"28.27"}, logo, json.results[0].geometry.location.lat, json.results[0].geometry.location.lng)
     const gasStation1 = GasStation("stockholmslan", "OKQ8", "HuddingeAgestavagen 2",{"95":"22.12","diesel":"28.27"}, "28.27", logo, json.results[0].geometry.location.lat, json.results[0].geometry.location.lng)
-    index++
 
     
     listOfGasStations.push(gasStation)

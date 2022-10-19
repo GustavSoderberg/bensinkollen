@@ -1,4 +1,3 @@
-import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import { SafeAreaView, Button, Alert,StyleSheet, Text, TextInput, View } from 'react-native';
 import { mapManager } from '../ViewModels/MapManager';
