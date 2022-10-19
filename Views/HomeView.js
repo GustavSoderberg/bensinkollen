@@ -28,7 +28,7 @@ stations.push(station5)
 stations.push(station6)
 stations.push(station7)
 stations.push(station8)
-//fetchStations(stations)
+fetchStations(stations)
 
 export default class Home extends React.Component {
     render() {
@@ -52,9 +52,9 @@ export default class Home extends React.Component {
                     
                     
 
-                    {/* {mapManager.listOfGasStations.map(n => (
+                    { mapManager.listOfGasStations.map(n => (
                       <Marker coordinate={{ latitude: n.lat, longitude: n.long }} pinColor="blue"><Image source={n.logo} style={{ width: settings.LogoWidth, height: settings.LogoHeight }} /><Callout><Text style={{ width: 50, height:  50 }}>{n.name + "\n" + "some more text here"}</Text></Callout></Marker>
-                    ))} */}
+                    )) }
 
                     </MapView>
             </View>
