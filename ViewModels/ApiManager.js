@@ -1,6 +1,3 @@
-import React, { useEffect, useState } from 'react';
-import { Image, ActivityIndicator, FlatList, Text, View } from 'react-native';
-import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
 import { settings } from '../Models/Settings';
 import { GasStation } from '../Models/GasStation';
 import { mapManager } from './MapManager';
@@ -113,7 +110,6 @@ export { getBensinmack }
 
 
  var listOfGasStations = Array(GasStation)
- var index = 0
 
  async function fetchStations(stations) {
 

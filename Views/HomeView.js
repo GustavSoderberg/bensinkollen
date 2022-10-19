@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import * as React from 'react';
-import { Image, Dimensions, StyleSheet, Text, View } from 'react-native';
+import { Dimensions, StyleSheet, View } from 'react-native';
 import MapView, { Callout, Circle, Marker } from "react-native-maps"
 
 import { mapManager } from '../ViewModels/MapManager';
@@ -52,9 +52,9 @@ export default class Home extends React.Component {
                     
                     
 
-                    {mapManager.listOfGasStations.map(n => (
+                    {/* {mapManager.listOfGasStations.map(n => (
                       <Marker coordinate={{ latitude: n.lat, longitude: n.long }} pinColor="blue"><Image source={n.logo} style={{ width: settings.LogoWidth, height: settings.LogoHeight }} /><Callout><Text style={{ width: 50, height:  50 }}>{n.name + "\n" + "some more text here"}</Text></Callout></Marker>
-                    ))}
+                    ))} */}
 
                     </MapView>
             </View>
