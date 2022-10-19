@@ -74,32 +74,52 @@ async function getBensinmack() {
 
 
     sep.splice(sep.length - 1, 1)
-    for (let i = 0; i < sep.length; i++){
-        for (let l = 0; l < sep[i].length; l++) {
-            console.log(sep[i][l]);
-       }
-       console.log("---------------------")
-       console.log("*********************")
-       console.log("---------------------")
-    }
+    // for (let i = 0; i < sep.length; i++){
+    //     for (let l = 0; l < sep[i].length; l++) {
+    //         console.log(sep[i][l]);
+    //    }
+    //    console.log("---------------------")
+    //    console.log("*********************")
+    //    console.log("---------------------")
+    // }
     console.log(sep.length)
 
+    const gasStationList = []
+    for (let i = 0; i < sep.length; i++) {
+        var tempGasList = []
+        for (let l = 0; l < sep[i][3][0].length; l++){
+            tempGasList.push([sep[i][3][0][l], sep[i][3][1][l]])
+        }
+        const newGasStation = GasStation(
+            sep[i][0],              // Region
+            sep[i][1],              // Name
+            sep[i][2],              // Address 
+            tempGasList,            // gasTypes
+            null,                   // logo
+            null,                   // lat
+            null)     
+            gasStationList.push(newGasStation)
+    }
+
+    for (let i = 0; i < gasStationList.length; i++){
+        console.log(gasStationList[i])
+    }
+    //console.log(gasStationList)
+
     //Template for GasStation obj
-    const gasStationTemplate = GasStation(
-    "stockholmslan",             // Region
-    "OKQ8",                      // Name
-    "Huddinge Agestavagen 2",    // Address 
-    [
-        ["95", "diesel"],        //   Nested array
-        ["22.12", "28.27"]       //   [["gas_type1", "gas_type2"], ["price_type1", "price_type2"]]
-    ],
-    null,                        // logo
-    null,                        // lat
-    null)                        // long
+    // const gasStationTemplate = GasStation(
+    // "stockholmslan",             // Region
+    // "OKQ8",                      // Name
+    // "Huddinge Agestavagen 2",    // Address 
+    // [
+    //     ["95", "diesel"],        //   Nested array
+    //     ["22.12", "28.27"]       //   [["gas_type1", "gas_type2"], ["price_type1", "price_type2"]]
+    // ],
+    // null,                        // logo
+    // null,                        // lat
+    // null)                        // long
 
     //End of template
-
-    console.log(gasStationTemplate)
 }
 
 export { getBensinmack }
