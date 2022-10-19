@@ -96,7 +96,7 @@ async function getBensinmack() {
             sep[i][2],              // Address 
             tempGasList,            // gasTypes
             null,                   // logo
-            null,                   // lat
+            "0",                    // lat
             null)     
             gasStationList.push(newGasStation)
     }
@@ -177,7 +177,6 @@ export { getBensinmack }
     //TODO: We shall calculate distance between gas station and user here
     const gasStation = GasStation("stockholmslan", station[0], station[1], {"95":"22.12","diesel":"28.27"}, logo, json.results[0].geometry.location.lat, json.results[0].geometry.location.lng)
     const gasStation1 = GasStation("stockholmslan", "OKQ8", "HuddingeAgestavagen 2",{"95":"22.12","diesel":"28.27"}, "28.27", logo, json.results[0].geometry.location.lat, json.results[0].geometry.location.lng)
-    index++
 
     
     listOfGasStations.push(gasStation)

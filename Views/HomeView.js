@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import * as React from 'react';
-import { Dimensions, StyleSheet, View } from 'react-native';
+import { Dimensions, StyleSheet, View, Image, Text} from 'react-native';
 import MapView, { Callout, Circle, Marker } from "react-native-maps"
 
 import { mapManager } from '../ViewModels/MapManager';
@@ -29,6 +29,7 @@ stations.push(station6)
 stations.push(station7)
 stations.push(station8)
 fetchStations(stations)
+
 
 export default class Home extends React.Component {
     render() {
