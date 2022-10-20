@@ -1,4 +1,5 @@
 import { settings } from '../Models/Settings';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { GasStation } from '../Models/GasStation';
 import { mapManager } from './MapManager';
 
@@ -97,56 +98,78 @@ async function getBensinmack() {
             tempGasList,            // gasTypes
             null,                   // logo
             "0",                    // lat
-            null)     
+            "0")     
             gasStationList.push(newGasStation)
     }
 
-    for (let i = 0; i < gasStationList.length; i++){
-        console.log(gasStationList[i])
-    }
+    
+    //clearAll()
+    storeData(gasStationList)
+    getData()
 
-    fetchStations(gasStationList)
-    //console.log(gasStationList)
-
-    //Template for GasStation obj
-    // const gasStationTemplate = GasStation(
-    // "stockholmslan",             // Region
-    // "OKQ8",                      // Name
-    // "Huddinge Agestavagen 2",    // Address 
-    // [
-    //     ["95", "diesel"],        //   Nested array
-    //     ["22.12", "28.27"]       //   [["gas_type1", "gas_type2"], ["price_type1", "price_type2"]]
-    // ],
-    // null,                        // logo
-    // null,                        // lat
-    // null)                        // long
-
-    //End of template
 }
 
 export { getBensinmack }
 
 
- var listOfGasStations = Array(GasStation)
 
- async function fetchStations(stations) {
+ 
 
-    stations.forEach(array => {
+ const storeData = async (value) => {
+    try {
+      const jsonValue = JSON.stringify(value)
+      await AsyncStorage.setItem('@bensinkollen', jsonValue)
+    } catch (e) {
+        console.log("something went wrong writing" + e)
+      // saving error
+    }
+  }
+
+  const getData = async () => {
+
+      const jsonValue = await AsyncStorage.getItem('@bensinkollen')
+      .then(jsonValue => JSON.parse(jsonValue))
+      .then(jsonValue => fetchStations(jsonValue))
+      .catch(error => console.log(error))
+
+  }
+
+  const clearAll = async () => {
+    try {
+      await AsyncStorage.clear()
+    } catch(e) {
+        console.log("something went wrong clearing" + e)
+    }
+  
+    console.log('Done.')
+  }
+
+  async function fetchStations(stations) {
+    console.log(`https://maps.googleapis.com/maps/api/geocode/json?address=${station[0]}%20${station[1]}&key=${settings.ApiKeyGoogle}`)
+    stations.forEach(station => {
         
+        if(station.lat === "0" ) {
 
-    fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${array[0]}%20${array[1]}&key=${settings.ApiKeyGoogle}`)
+            fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${station[0]}%20${station[1]}&key=${settings.ApiKeyGoogle}`)
+            .then((array) => array.json())
+            .then(json => createGasStation(json, station))
+            .catch(error => console.log(error))
 
-     .then((array) => array.json())
-     .then(json => createGasStation(json, array))
-     .catch(error => console.log(error))
+        }
+        else {
+
+            mapManager.updateGasStation(station)
+
+        }
 
     });
 
-
  }
+
  export { fetchStations }
 
  function createGasStation(json, station) {
+    console.log(json)
 
 
     var logo = require('../assets/logos/default_pin.png')
@@ -173,15 +196,15 @@ export { getBensinmack }
             logo = require('../assets/logos/default_pin.png')
             break;
       }
-      
-
 
     //TODO: We shall calculate distance between gas station and user here
-    const gasStation = GasStation("stockholmslan", station[0], station[1], {"95":"22.12","diesel":"28.27"}, logo, json.results[0].geometry.location.lat, json.results[0].geometry.location.lng)
-    const gasStation1 = GasStation("stockholmslan", "OKQ8", "HuddingeAgestavagen 2",{"95":"22.12","diesel":"28.27"}, "28.27", logo, json.results[0].geometry.location.lat, json.results[0].geometry.location.lng)
 
+    //   station.lat = json.results[0].geometry.location.lat.json()
+    //   station.lng = json.results[0].geometry.location.lng.json()
+    //   station.logo = logo
+
+      const gasStation = GasStation(station[0],station[1],station[2],station[3],logo,json.results[0].geometry.location.lat,json.results[0].geometry.location.lng )
     
-    listOfGasStations.push(gasStation)
-    mapManager.updateGasStations(gasStation)
+    mapManager.updateGasStation(gasStation)
 
  }

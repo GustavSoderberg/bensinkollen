@@ -19,11 +19,11 @@ class MapManager {
         this.currentUser.radius = radius
         this.currentUser.lat = lat
         this.currentUser.long = long
-        console.log(mapManager.currentUser)
+        // console.log(mapManager.currentUser)
 
     }
 
-    updateGasStations(station) {
+    updateGasStation(station) {
 
         this.listOfGasStations.push(station)
         // console.log(station)
