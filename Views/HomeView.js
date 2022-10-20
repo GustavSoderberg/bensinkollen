@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import * as React from 'react';
-import { Image, Dimensions, StyleSheet, Text, View, ScrollView } from 'react-native';
+import { Image, Dimensions, StyleSheet, Text, View, ScrollView, PermissionsAndroid } from 'react-native';
 import MapView, { Callout, Circle, Marker } from "react-native-maps"
 
 import { mapManager } from '../ViewModels/MapManager';
@@ -12,29 +12,8 @@ import DropdownComponent from './DropDownView';
 
 
 
-
 getBensinmack()
 //mapManager.initialize()
-
-var stations = Array()
-const station1 = ["Ingo","Nämndemansvägen 2, 757 57 Uppsala", "44.44"]
-const station2 = ["OKQ8","Svartbäcksgatan 69, 753 33 Uppsala", "11.11"]
-const station3 = ["ST1","Klangs gränd 2, 752 33 Uppsala", "22.22"]
-const station4 = ["Shell","Vaksalagatan 85, 753 31 Uppsala", "33.33"]
-const station5 = ["OKQ8","Skebogatan 2, 752 28 Uppsala", "33.33"]
-const station6 = ["Circle K","Gamla Uppsalagatan 48, 754 25 Uppsala", "33.33"]
-const station7 = ["Ingo","Kungsgatan 72, 753 21 Uppsala", "33.33"]
-const station8 = ["Preem","Marmorvägen 2, 752 44 Uppsala", "33.33"]
-stations.push(station1)
-stations.push(station2)
-stations.push(station3)
-stations.push(station4)
-stations.push(station5)
-stations.push(station6)
-stations.push(station7)
-stations.push(station8)
-//fetchStations(stations)
-
 
 export default class Home extends React.Component {
     render() {
@@ -45,12 +24,22 @@ export default class Home extends React.Component {
                 <DropdownComponent/>
 
                   <MapView style={styles.map}
+                  onMapReady={() => {
+                    PermissionsAndroid.request(
+                      PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
+                    ).then(granted => {
+                      alert(granted) // just to ensure that permissions were granted
+                    });
+                  }}
                     initialRegion={{
                         latitude: (mapManager.currentUser.lat),
                         longitude: (mapManager.currentUser.long),
                         latitudeDelta: ((settings.LatDelta)),
                         longitudeDelta: ((settings.LngDelta)),
                     }}
+                    region={this.props.coordinate}
+                    showsMyLocationButton={true}
+                    followsUserLocation={true}
                     showsUserLocation={true}
                     provider="google"
                     >
