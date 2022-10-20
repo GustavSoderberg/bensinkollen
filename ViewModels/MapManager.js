@@ -76,6 +76,6 @@ class MapManager {
 
 }
 
-const mapManager = new MapManager(User(59.868125, 17.659776))
+const mapManager = new MapManager(User(59.361631, 17.959703))
 
 export { mapManager }
