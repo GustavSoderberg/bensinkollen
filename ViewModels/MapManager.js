@@ -19,14 +19,16 @@ class MapManager {
         this.currentUser.radius = radius
         this.currentUser.lat = lat
         this.currentUser.long = long
-        console.log(mapManager.currentUser)
+        // console.log(mapManager.currentUser)
 
     }
 
-    updateGasStations(station) {
+    updateGasStation(station) {
 
-        this.listOfGasStations.push(station)
-        // console.log(station)
+        if (station.lat != "0") {
+            this.listOfGasStations.push(station)
+            console.log(station)
+        }
 
     }
 
@@ -76,6 +78,6 @@ class MapManager {
 
 }
 
-const mapManager = new MapManager(User(59.868125, 17.659776))
+const mapManager = new MapManager(User(59.361631, 17.959703))
 
 export { mapManager }

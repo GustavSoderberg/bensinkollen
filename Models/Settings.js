@@ -1,6 +1,6 @@
 class Settings {
 
-    ApiKeyGoogle = "AIzaSyD277SAgiNn-6NP0r3hFPzpduhVc2IVsxY"
+    ApiKeyGoogle = "AIzaSyBxuQEERQCVO6CdXBwlFfjBcJxAPr9nBlM"
     RadiusConstant = 5
     RadiusCircle = 1000*this.RadiusConstant
     LatDelta = 0.04*this.RadiusConstant
