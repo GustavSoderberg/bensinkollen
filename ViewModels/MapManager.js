@@ -25,8 +25,10 @@ class MapManager {
 
     updateGasStation(station) {
 
-        this.listOfGasStations.push(station)
-        // console.log(station)
+        if (station.lat != "0") {
+            this.listOfGasStations.push(station)
+            console.log(station)
+        }
 
     }
 

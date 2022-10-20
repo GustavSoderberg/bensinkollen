@@ -103,9 +103,10 @@ async function getBensinmack() {
     }
 
     
-    //clearAll()
+    // fetchStations(gasStationList)
+    // clearAll()
     storeData(gasStationList)
-    getData()
+    getData(gasStationList)
 
 }
 
@@ -145,15 +146,17 @@ export { getBensinmack }
   }
 
   async function fetchStations(stations) {
-    console.log(`https://maps.googleapis.com/maps/api/geocode/json?address=${station[0]}%20${station[1]}&key=${settings.ApiKeyGoogle}`)
+    
     stations.forEach(station => {
         
         if(station.lat === "0" ) {
 
-            fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${station[0]}%20${station[1]}&key=${settings.ApiKeyGoogle}`)
-            .then((array) => array.json())
-            .then(json => createGasStation(json, station))
-            .catch(error => console.log(error))
+            //ARE U SURE ABOUT UN-COMMENTING THIS?
+
+            // fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${station.name}%20${station.address}&key=${settings.ApiKeyGoogle}`)
+            // .then((station) => station.json())
+            // .then(json => createGasStation(json, station))
+            // .catch(error => console.log(error))
 
         }
         else {
@@ -169,11 +172,9 @@ export { getBensinmack }
  export { fetchStations }
 
  function createGasStation(json, station) {
-    console.log(json)
-
 
     var logo = require('../assets/logos/default_pin.png')
-    switch (station[0]) {
+    switch (station.name) {
         case 'Circle K':
             logo = require('../assets/logos/circlek_pin.png')
             break;
@@ -203,7 +204,8 @@ export { getBensinmack }
     //   station.lng = json.results[0].geometry.location.lng.json()
     //   station.logo = logo
 
-      const gasStation = GasStation(station[0],station[1],station[2],station[3],logo,json.results[0].geometry.location.lat,json.results[0].geometry.location.lng )
+    const gasStation = GasStation(station.region,station.name,station.address,station.types,logo,json.results[0].geometry.location.lat,json.results[0].geometry.location.lng )
+    
     
     mapManager.updateGasStation(gasStation)
 

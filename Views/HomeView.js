@@ -12,7 +12,7 @@ import DropdownComponent from './DropDownView';
 
 
 
-getBensinmack()
+//getBensinmack()
 //mapManager.initialize()
 
 export default class Home extends React.Component {
@@ -48,9 +48,9 @@ export default class Home extends React.Component {
                     
                       <Circle center={{ latitude: mapManager.currentUser.lat, longitude: mapManager.currentUser.long }} radius={(settings.RadiusCircle)} />
 
-                    {/* { mapManager.listOfGasStations.map(n => (
+                    { mapManager.listOfGasStations.map(n => (
                       <Marker coordinate={{ latitude: n.lat, longitude: n.long }} pinColor="blue"><Image source={n.logo} style={{ width: settings.LogoWidth, height: settings.LogoHeight }} /><Callout><Text style={{ width: 50, height:  50 }}>{n.name + "\n" + "some more text here"}</Text></Callout></Marker>
-                    )) } */}
+                    )) }
 
                     </MapView>
             </ScrollView>
