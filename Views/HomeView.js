@@ -13,8 +13,8 @@ import DropdownComponent from './DropDownView';
 
 
 
-//getBensinmack()
-mapManager.initialize()
+getBensinmack()
+//mapManager.initialize()
 
 var stations = Array()
 const station1 = ["Ingo","Nämndemansvägen 2, 757 57 Uppsala", "44.44"]
