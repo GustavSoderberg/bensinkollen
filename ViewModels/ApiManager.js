@@ -10,15 +10,9 @@ async function getBensinmack() {
     const data = '{"stockholmslan_Circle_K_OsterakerSodra_Ingmarso__etanol": "15.92","stockholmslan_Circle_K_OsterakerCentralvagen_67_Akersberga__etanol": "15.92","stockholmslan_OKQ8_OsterakerAkersberga_Rallarvagen_2__etanol": "15.92","stockholmslan_Circle_K_OsterakerLuffarbacken_Akersberga__etanol": "15.92","stockholmslan_Preem_OsterakerRallarvagen_1_Akersberga__etanol": "15.92",v_87__95": "21.84", "data_fran_https://bensinpriser.nu}'
     
     const sep = data.split(",");
-    const macs = []
-    var nameFound = false
-    var ammount = 0
-    var arraylength = sep.length - 1
-
 
     //for (let i = 0; i < sep.length - 1; i++) {
     for (let i = 0; i < sep.length - 1; i++) {
-
         
         sep[i] = sep[i].replace(/["{}]/g, "");
 
@@ -42,20 +36,16 @@ async function getBensinmack() {
         // Remove duplicate addresses
         sep[i] = [sep[i][0], sep[i][1], sep[i][sep[i].length-2], sep[i][sep[i].length-1]]
 
-        // Split type of gas and price
-
-        //const temp = sep[i][3].split(":");
-        //sep[i][3] = temp[0] //bensintyp
-        //sep[i].push(temp[1].trim()) //pris
-
+        //creates separete arrays for gas type and price, with corresponding index ex. sep[i][3][0][2] is 3rd type of gas & sep[i][3][1][2] is the price for that gas
         const temp = sep[i][3].split(":");
         sep[i][3] = ["typ", "pris"]
-        sep[i][3][0] = [temp[0]] //typ
-        sep[i][3][1] = [temp[1].trim()] //pris
+        sep[i][3][0] = [temp[0]] //type
+        sep[i][3][1] = [temp[1].trim()] //price
 
+        //merges identical locations adding the type of gas to an array
         for (let l = 0; l < i - 1; l++){
-            // 0 = typ ex. sep[i][3][0]
-            // 1 = pris ex. sep[i][3][1]
+            // 0 = type ex. sep[i][3][0]
+            // 1 = price ex. sep[i][3][1]
             if (sep[l][2] == sep[i][2]) {
                 sep[l][3][0].push(sep[i][3][0][0])
                 sep[l][3][1].push(sep[i][3][1][0])
@@ -64,6 +54,8 @@ async function getBensinmack() {
             }
         }
     }
+
+    // cleans array (the merge left a lot of empty items in the array) from ~800 to ~250
     var deltaLength = sep.length - 1
     for (let i = 0; i < deltaLength; i++) {
         if (sep[i] == ""){
@@ -73,18 +65,13 @@ async function getBensinmack() {
         }
     }
 
-
+    //the last item in the array became weird so it is removed (this is done after the sorting)
     sep.splice(sep.length - 1, 1)
-    // for (let i = 0; i < sep.length; i++){
-    //     for (let l = 0; l < sep[i].length; l++) {
-    //         console.log(sep[i][l]);
-    //    }
-    //    console.log("---------------------")
-    //    console.log("*********************")
-    //    console.log("---------------------")
-    // }
+
+    //for debugging
     console.log(sep.length)
 
+    //turns the items in the array into gasStation object
     const gasStationList = []
     for (let i = 0; i < sep.length; i++) {
         var tempGasList = []
