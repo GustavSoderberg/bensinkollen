@@ -1,12 +1,12 @@
 class Settings {
 
     ApiKeyGoogle = "AIzaSyA4E_orvod_psmMs34Hynr8QWWV-yoZIeQ"
-    RadiusConstant = 5
+    RadiusConstant = 30
     RadiusCircle = 1000*this.RadiusConstant
     LatDelta = 0.04*this.RadiusConstant
     LngDelta = 0.04*this.RadiusConstant
-    LogoWidth = 6.25*this.RadiusConstant
-    LogoHeight = (10.825)*this.RadiusConstant
+    LogoWidth = 25
+    LogoHeight = 43.3
     
 
 }

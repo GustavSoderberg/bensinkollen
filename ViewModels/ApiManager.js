@@ -2,6 +2,7 @@ import { settings } from '../Models/Settings';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { GasStation } from '../Models/GasStation';
 import { mapManager } from './MapManager';
+import { get } from 'react-native/Libraries/Utilities/PixelRatio';
 
 
 async function getBensinmack() {
@@ -89,10 +90,13 @@ async function getBensinmack() {
             gasStationList.push(newGasStation)
     }
 
-    fetchStations(gasStationList)
+    // fetchStations(gasStationList)
     // clearAll()
-    // storeData(gasStationList)
-    // getData(gasStationList)
+
+    await AsyncStorage.getItem('@bensinkollen')
+      .then(jsonValue => JSON.parse(jsonValue))
+      .then(jsonValue => fetchStations(jsonValue))
+      .catch(error => console.log(error))
 
 }
 
@@ -153,10 +157,11 @@ export { getBensinmack }
 
     //TODO: We shall calculate distance between gas station and user here
 
-    station.lat = lat
-    station.long = lng
-    
-    mapManager.updateGasStation(station)
+    const station1 = GasStation(station.region, station.name, station.address, station.types, logo, lat, lng)
+    // station.logo = logo
+    // station.lat = lat
+    // station.long = lng
+    mapManager.updateGasStation(station1)
 
  }
 
