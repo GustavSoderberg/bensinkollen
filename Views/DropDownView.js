@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Image, Dimensions, StyleSheet, Text, View, ScrollView, PermissionsAndroid } from 'react-native';
 import MapView, { Callout, Circle, Marker } from "react-native-maps"
 import { mapManager } from '../ViewModels/MapManager';
 import { settings } from '../Models/Settings';
 import { Dropdown } from 'react-native-element-dropdown';
+
+import * as Location from 'expo-location'; 
 
 const data = [
   { label: '1 km', value: '1000' },
@@ -16,48 +18,72 @@ const data = [
 const DropdownComponent = () => {
   const [value, setValue] = useState(3000);
   const [isFocus, setIsFocus] = useState(false);
-  
+
   const renderLabel = () => {
     if (value || isFocus) {
       return (
         <Text style={[styles.label, isFocus && { color: 'black' }]}>
-        Dropdown label
+          Dropdown label
         </Text>
-        );
+      );
+    }
+    return null;
+  };
+
+  const [location, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        setErrorMsg('Permission to access location was denied');
+        return;
       }
-      return null;
-    };
-    
-    return (
+
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+    })();
+  }, []);
+
+  var text = 'Waiting..';
+  if (errorMsg) {
+    text = errorMsg;
+  } else if (location) {
+    text = location.coords.latitude;
+  }
+  console.log(text)
+  return (
       <View>
-      <View style={styles.container}>
+    <View style={styles.container}>
       {renderLabel()}
       <Dropdown
-      style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
-      placeholderStyle={styles.placeholderStyle}
-      selectedTextStyle={styles.selectedTextStyle}
-      inputSearchStyle={styles.inputSearchStyle}
-      iconStyle={styles.iconStyle}
-      data={data}
+        style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
+        placeholderStyle={styles.placeholderStyle}
+        selectedTextStyle={styles.selectedTextStyle}
+        inputSearchStyle={styles.inputSearchStyle}
+        iconStyle={styles.iconStyle}
+        data={data}
       //search  search
-      maxHeight={300}
-      labelField="label"
-      valueField={!isFocus ? value/1000 + "km" : '...'}
-      placeholder={!isFocus ? value/1000 + "km" : '...'}
-      searchPlaceholder="Search..."
-      value={value}
-      onFocus={() => setIsFocus(true)}
-      onBlur={() => setIsFocus(false)}
-      onChange={item => {
+        maxHeight={300}
+        labelField="label"
+        valueField={!isFocus ? value/1000 + "km" : '...'}
+        placeholder={!isFocus ? value/1000 + "km" : '...'}
+        searchPlaceholder="Search..."
+        value={value}
+        onFocus={() => setIsFocus(true)}
+        onBlur={() => setIsFocus(false)}
+        onChange={item => {
         settings.RadiusConstant = value
-        setValue(item.value);
-        setIsFocus(false);
-      }}
+          setValue(item.value);
+          setIsFocus(false);
+        }}
       />
-      </View>
+    </View>
       <MapView style={styles.map}
       initialRegion={{
-        latitude: (mapManager.currentUser.lat),
+        latitude: (mapManager.currentUser.long),
         longitude: (mapManager.currentUser.long),
         latitudeDelta: ((settings.LatDelta)),
         longitudeDelta: ((settings.LngDelta)),
@@ -72,7 +98,7 @@ const DropdownComponent = () => {
       
       <Circle center={{ latitude: mapManager.currentUser.lat, longitude: mapManager.currentUser.long }} radius={parseInt(value)} />
       
-      { mapManager.listOfGasStations.map(n => (
+       { mapManager.listOfGasStations.map(n => (
         // console.log(n.name)
         <Marker coordinate={{
           latitude: (Number(n.lat)),
@@ -85,67 +111,67 @@ const DropdownComponent = () => {
           </Callout>
         </Marker>
         )) }
+      
+      </MapView> 
+      </View> 
+  );
+}; 
+
+export default DropdownComponent;
+
+const styles = StyleSheet.create({
+      buttonText: {
+        fontSize:16,
+        fontWeight:'500',
+        color:'#212121',
+        textAlign:'center'
+      },
+      map: {
+        width: Dimensions.get("window").width,
+        height: Dimensions.get("window").height
         
-        </MapView>
-        </View>
-        );
-      };
-      
-      export default DropdownComponent;
-      
-      const styles = StyleSheet.create({
-        buttonText: {
-          fontSize:16,
-          fontWeight:'500',
-          color:'#212121',
-          textAlign:'center'
-        },
-        map: {
-          width: Dimensions.get("window").width,
-          height: Dimensions.get("window").height
-          
-        },
-        container: {
-          position: 'absolute',
-          zIndex: 90,
-          padding: 16,
-          width: '40%',
-        },
-        //dropdown button collapsed vvv
-        dropdown: {
-          height: 50,
-          borderColor: 'white',
-          backgroundColor: 'blue',
-          borderWidth: 0.5,
-          borderRadius: 8,
-          paddingHorizontal: 8,
-        },
-        icon: {
-          marginRight: 5,
-        },
-        //top label vvv
-        label: {
-          position: 'absolute',
-          backgroundColor: 'white',
-          left: 22,
-          top: 8,
-          zIndex: 999,
-          paddingHorizontal: 8,
-          fontSize: 14,
-        },
-        placeholderStyle: {
-          fontSize: 16,
-        },
-        selectedTextStyle: {
-          fontSize: 16,
-        },
-        //arrow icon size vvv
-        iconStyle: {
-          width: 20,
-          height: 20,
-        },
-        inputSearchStyle: {
-          height: 40,
-          fontSize: 16,
-        },
-      });
+      },
+  container: {
+    position: 'absolute',
+    zIndex: 90,
+    padding: 16,
+    width: '40%',
+  },
+  //dropdown button collapsed vvv
+  dropdown: {
+    height: 50,
+    borderColor: 'white',
+    backgroundColor: 'blue',
+    borderWidth: 0.5,
+    borderRadius: 8,
+    paddingHorizontal: 8,
+  },
+  icon: {
+    marginRight: 5,
+  },
+  //top label vvv
+  label: {
+    position: 'absolute',
+    backgroundColor: 'white',
+    left: 22,
+    top: 8,
+    zIndex: 999,
+    paddingHorizontal: 8,
+    fontSize: 14,
+  },
+  placeholderStyle: {
+    fontSize: 16,
+  },
+  selectedTextStyle: {
+    fontSize: 16,
+  },
+  //arrow icon size vvv
+  iconStyle: {
+    width: 20,
+    height: 20,
+  },
+  inputSearchStyle: {
+    height: 40,
+    fontSize: 16,
+  },
+});
