@@ -9,7 +9,7 @@ const data = [
   { label: '1 km', value: '1000' },
   { label: '2 km', value: '2000' },
   { label: '3 km', value: '3000' },
-  { label: '4 kq', value: '4000' },
+  { label: '4 km', value: '4000' },
   { label: '5 km', value: '5000' },
 ];
 
@@ -72,9 +72,9 @@ const DropdownComponent = () => {
       
       <Circle center={{ latitude: mapManager.currentUser.lat, longitude: mapManager.currentUser.long }} radius={value} />
       
-      {/* { mapManager.listOfGasStations.map(n => (
+      { mapManager.listOfGasStations.map(n => (
         <Marker coordinate={{ latitude: n.lat, longitude: n.long }} pinColor="blue"><Image source={n.logo} style={{ width: settings.LogoWidth, height: settings.LogoHeight }} /><Callout><Text style={{ width: 50, height:  50 }}>{n.name + "\n" + "some more text here"}</Text></Callout></Marker>
-      )) } */}
+      )) }
       
       </MapView>
       </View>
