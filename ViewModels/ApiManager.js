@@ -7,7 +7,7 @@ import { mapManager } from './MapManager';
 async function getBensinmack() {
 
     //const data = await (await fetch('https://henrikhjelm.se/api/getdata.php?lan=stockholms-lan')).text()
-    const data = '{"stockholmslan_Circle_K_OsterakerSodra_Ingmarso__etanol": "15.92","stockholmslan_Circle_K_OsterakerCentralvagen_67_Akersberga__etanol": "15.92","stockholmslan_OKQ8_OsterakerAkersberga_Rallarvagen_2__etanol": "15.92","stockholmslan_Circle_K_OsterakerLuffarbacken_Akersberga__etanol": "15.92","stockholmslan_Preem_OsterakerRallarvagen_1_Akersberga__etanol": "15.92",v_87__95": "21.84", "data_fran_https://bensinpriser.nu}'
+    const data = '{"stockholmslan_Circle_K_OsterakerSodra_Ingmarso__etanol": "15.92","stockholmslan_Circle_K_OsterakerCentralvagen_67_Akersberga__etanol": "15.92"}'
     
     const sep = data.split(",");
 
@@ -89,7 +89,6 @@ async function getBensinmack() {
             gasStationList.push(newGasStation)
     }
 
-    console.log(gasStationList)
     fetchStations(gasStationList)
     // clearAll()
     // storeData(gasStationList)
@@ -99,9 +98,67 @@ async function getBensinmack() {
 
 export { getBensinmack }
 
+  async function fetchStations(stations) {
+    
+    stations.forEach(station => {
+        
+        if(station.lat === "0" ) {
 
+            //ARE U SURE ABOUT UN-COMMENTING THIS?
 
- 
+            // fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${station.name}%20${station.address}&key=${settings.ApiKeyGoogle}`)
+            // .then(json => json.json())
+            // .then(json => {json.status != "ZERO_RESULTS" ? createGasStation(json.results[0].geometry.location.lat, json.results[0].geometry.location.lng, station) : console.log("ApiManager - fetchStations: One Google fetch returned no result")})
+            // .catch(error => console.log(error))
+
+        }
+        else {
+
+            mapManager.updateGasStation(station)
+
+        }
+
+    });
+
+ }
+
+ export { fetchStations }
+
+ function createGasStation(lat, lng, station) {
+
+    var logo = require('../assets/logos/default_pin.png')
+    switch (station.name.toLowerCase()) {
+        case 'circle k':
+            logo = require('../assets/logos/circlek_pin.png')
+            break;
+        case 'ingo':
+            logo = require('../assets/logos/ingo_pin.png')
+            break;
+        case 'okq8':
+            logo = require('../assets/logos/okq8_pin.png')
+            break;
+        case 'st1':
+            logo = require('../assets/logos/st1_pin.png')
+            break;
+        case 'tanka':
+            logo = require('../assets/logos/tanka_pin.png')
+            break;
+        case 'preem':
+            logo = require('../assets/logos/preem_pin.png')
+            break;
+        default:
+            logo = require('../assets/logos/default_pin.png')
+            break;
+      }
+
+    //TODO: We shall calculate distance between gas station and user here
+
+    station.lat = lat
+    station.long = lng
+    
+    mapManager.updateGasStation(station)
+
+ }
 
  const storeData = async (value) => {
     try {
@@ -131,68 +188,3 @@ export { getBensinmack }
   
     console.log('Done.')
   }
-
-  async function fetchStations(stations) {
-    
-    stations.forEach(station => {
-        
-        if(station.lat === "0" ) {
-
-            //ARE U SURE ABOUT UN-COMMENTING THIS?
-
-            // fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${station.name}%20${station.address}&key=${settings.ApiKeyGoogle}`)
-            // .then((station) => station.json())
-            // .then(json => {json.status != "ZERO_RESULTS" ? createGasStation(json, station) : console.log("ApiManager - fetchStations: One Google fetch returned no result")})
-            // .then(json => console.log(json))
-            // .then(json => createGasStation(json, station))
-            // .catch(error => console.log(error))
-
-        }
-        else {
-
-            mapManager.updateGasStation(station)
-
-        }
-
-    });
-
- }
-
- export { fetchStations }
-
- function createGasStation(json, station) {
-
-    var logo = require('../assets/logos/default_pin.png')
-    switch (station.name.toLowerCase()) {
-        case 'circle k':
-            logo = require('../assets/logos/circlek_pin.png')
-            break;
-        case 'ingo':
-            logo = require('../assets/logos/ingo_pin.png')
-            break;
-        case 'okq8':
-            logo = require('../assets/logos/okq8_pin.png')
-            break;
-        case 'st1':
-            logo = require('../assets/logos/st1_pin.png')
-            break;
-        case 'tanka':
-            logo = require('../assets/logos/tanka_pin.png')
-            break;
-        case 'preem':
-            logo = require('../assets/logos/preem_pin.png')
-            break;
-        default:
-            logo = require('../assets/logos/default_pin.png')
-            break;
-      }
-
-    //TODO: We shall calculate distance between gas station and user here
-
-      console.log(json.results[0].geometry.location.lat)
-
-    
-    
-    mapManager.updateGasStation(station)
-
- }

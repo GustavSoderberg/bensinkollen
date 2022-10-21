@@ -27,7 +27,9 @@ class MapManager {
 
         if (station.lat != "0") {
             this.listOfGasStations.push(station)
-            console.log(station)
+            this.listOfGasStations.forEach(element => {
+                console.log(element)
+            });
         }
 
     }
