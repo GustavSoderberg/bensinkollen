@@ -53,7 +53,7 @@ const DropdownComponent = () => {
   } else if (location) {
     text = location.coords.latitude;
   }
-  console.log(text)
+  // console.log(text)
   return (
       <View>
     <View style={styles.container}>
@@ -83,7 +83,7 @@ const DropdownComponent = () => {
     </View>
       <MapView style={styles.map}
       initialRegion={{
-        latitude: (mapManager.currentUser.long),
+        latitude: (mapManager.currentUser.lat),
         longitude: (mapManager.currentUser.long),
         latitudeDelta: ((settings.LatDelta)),
         longitudeDelta: ((settings.LngDelta)),
@@ -94,18 +94,17 @@ const DropdownComponent = () => {
       provider="google"
       >
       
-      {/* <Marker coordinate={{ latitude: mapManager.currentUser.lat, longitude: mapManager.currentUser.long }} /> */}
+      {/* <Marker coordinate={{ latitude: n.lat, longitude: n.long }} /> */}
       
       <Circle center={{ latitude: mapManager.currentUser.lat, longitude: mapManager.currentUser.long }} radius={parseInt(value)} />
       
        { mapManager.listOfGasStations.map(n => (
-        // console.log(n.name)
         <Marker coordinate={{
-          latitude: (Number(n.lat)),
-          longitude: (Number(n.long)),
+          latitude: (n.lat),
+          longitude: (n.long),
         }}
         >
-          <Image source={n.logo} style={{ width: settings.LogoWidth, height: settings.LogoHeight }} />
+          <Image source={(n.logo)} style={{ width: settings.LogoWidth, height: settings.LogoHeight }} />
           <Callout>
             <Text style={{width: 50, height: 15 }}>{n.name}</Text>
           </Callout>
