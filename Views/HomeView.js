@@ -13,6 +13,7 @@ import DropdownComponent from './DropDownView';
 
 
 // getBensinmack()
+mapManager.initialize()
 
 export default class Home extends React.Component {
   render() {
