@@ -12,49 +12,19 @@ import DropdownComponent from './DropDownView';
 
 
 
-//getBensinmack()
-//mapManager.initialize()
+// getBensinmack()
 
 export default class Home extends React.Component {
-    render() {
-
-        return (
-            <ScrollView style={{ marginTop: 0}}>
-
-                <DropdownComponent/>
-
-                  <MapView style={styles.map}
-                  onMapReady={() => {
-                    PermissionsAndroid.request(
-                      PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
-                    ).then(granted => {
-                      alert(granted) // just to ensure that permissions were granted
-                    });
-                  }}
-                    initialRegion={{
-                        latitude: (mapManager.currentUser.lat),
-                        longitude: (mapManager.currentUser.long),
-                        latitudeDelta: ((settings.LatDelta)),
-                        longitudeDelta: ((settings.LngDelta)),
-                    }}
-                    region={this.props.coordinate}
-                    showsMyLocationButton={true}
-                    followsUserLocation={true}
-                    showsUserLocation={true}
-                    provider="google"
-                    >
-
-                    {/* <Marker coordinate={{ latitude: mapManager.currentUser.lat, longitude: mapManager.currentUser.long }} /> */}
-                    
-                      <Circle center={{ latitude: mapManager.currentUser.lat, longitude: mapManager.currentUser.long }} radius={(settings.RadiusCircle)} />
-
-                    { mapManager.listOfGasStations.map(n => (
-                      <Marker coordinate={{ latitude: n.lat, longitude: n.long }} pinColor="blue"><Image source={n.logo} style={{ width: settings.LogoWidth, height: settings.LogoHeight }} /><Callout><Text style={{ width: 50, height:  50 }}>{n.name + "\n" + "some more text here"}</Text></Callout></Marker>
-                    )) }
-
-                    </MapView>
-            </ScrollView>
-        );
+  render() {
+    
+    return (
+      
+      <ScrollView style={{ marginTop: 0}}>
+      <DropdownComponent/>
+      </ScrollView>
+      
+      
+      );
     }
   }
   
@@ -74,6 +44,6 @@ export default class Home extends React.Component {
     map: {
       width: Dimensions.get("window").width,
       height: Dimensions.get("window").height
-  
+      
     }
   })

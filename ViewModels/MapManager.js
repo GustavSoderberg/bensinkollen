@@ -6,7 +6,7 @@ import { apiManager, fetchStations } from './ApiManager'
 class MapManager {
 
     currentUser = User
-    listOfGasStations = new Array(GasStation)
+    listOfGasStations = Array()
 
     constructor(currentUser) {
 
@@ -27,7 +27,7 @@ class MapManager {
 
         if (station.lat != "0") {
             this.listOfGasStations.push(station)
-            console.log(station)
+            console.log(this.listOfGasStations)
         }
 
     }
