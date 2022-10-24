@@ -99,12 +99,15 @@ const DropdownComponent = () => {
       <Circle center={{ latitude: mapManager.currentUser.lat, longitude: mapManager.currentUser.long }} radius={parseInt(value)} />
       
        { mapManager.listOfGasStations.map(n => (
-        <Marker coordinate={{
+        // console.log(n.key)
+        <Marker
+        coordinate={{
           latitude: (n.lat),
           longitude: (n.long),
         }}
+        key={n.key}
         >
-          <Image source={(n.logo)} style={{ width: settings.LogoWidth, height: settings.LogoHeight }} />
+          {/* <Image source={(n.logo)} style={{ width: settings.LogoWidth, height: settings.LogoHeight }} /> */}
           <Callout>
             <Text style={{width: 50, height: 15 }}>{n.name}</Text>
           </Callout>
