@@ -2,7 +2,7 @@ import { User } from '../Models/User';
 import { storeData, getData, clearAll } from './StorageManager'
 import { getBensinmack, fetchLatLng } from './ApiManager'
 
-
+var counter = 0
 class MapManager {
 
     currentUser = User
@@ -36,9 +36,8 @@ class MapManager {
 
             const updatedStations = []
             localstorage = await fetchLatLng(localstorage)
-
+            
             await localstorage.forEach(station => {
-                
                 const uStation = this.compare(station, henrikhjelm)
                 updatedStations.push(uStation)
 
@@ -52,32 +51,28 @@ class MapManager {
     }
 
     compare(station, henrik) {
-
+        
         henrik.forEach(result => {
-            if (result.lat == station.lat) {
-
-                if (station.region != henrik.region) { station.region = henrik.region }
-                if (station.name != henrik.name) { station.name = henrik.name }
-                if (station.address != henrik.address) { station.address = henrik.address }
+            if (result.address == station.address) {
                 
                 station.types.forEach(type => {
-
+                        
                         switch (type[0].toLowerCase()) {
                             case '95':
-                                result.types.forEach(price => {console.log(type[1] + " " + result[1]); if (type[1] != price[1]) { type[1] = price[1]; console.log(`Updated price of ${type[0]} from ${result[1]} to ${type[1]} ${station.name}`)} })
+                                result.types.forEach(price => { if (type[0] === price[0] && type[1] !== price[1]) { const old = type[1]; type[1] = price[1]; console.log(`Updated ${station.name} ${station.address}${type[0]}: ${old} => ${price[1]}`) }})
                                 break;
                             case '98':
-                                result.types.forEach(price => { if (type[1] != price[1]) { type[1] = price[1]; console.log(`Updated price of ${type[0]} from ${result[1]} to ${type[1]} ${station.name}`)} })
+                                result.types.forEach(price => { if (type[0] === price[0] && type[1] !== price[1]) { const old = type[1]; type[1] = price[1]; console.log(`Updated ${station.name} ${station.address}${type[0]}: ${old} => ${price[1]}`) }})
                                 break;
                             case 'diesel':
-                                result.types.forEach(price => { if (type[1] != price[1]) { type[1] = price[1]; console.log(`Updated price of ${type[0]} from ${result[1]} to ${type[1]} ${station.name}`)} })
+                                result.types.forEach(price => { if (type[0] === price[0] && type[1] !== price[1]) { const old = type[1]; type[1] = price[1]; console.log(`Updated ${station.name} ${station.address}${type[0]}: ${old} => ${price[1]}`) }})
                                 break;
                             case 'etanol':
-                                result.types.forEach(price => { if (type[1] != price[1]) { type[1] = price[1]; console.log(`Updated price of ${type[0]} from ${result[1]} to ${type[1]} ${station.name}`)} })
+                                result.types.forEach(price => { if (type[0] === price[0] && type[1] !== price[1]) { const old = type[1]; type[1] = price[1]; console.log(`Updated ${station.name} ${station.address}${type[0]}: ${old} => ${price[1]}`) }})
                                 break;
                             case 'fordonsgas':
-                                result.types.forEach(price => { if (type[1] != price[1]) { type[1] = price[1]; console.log(`Updated price of ${type[0]} from ${result[1]} to ${type[1]} ${station.name}`)} })
-                            break;
+                                result.types.forEach(price => { if (type[0] === price[0] && type[1] !== price[1]) { const old = type[1]; type[1] = price[1]; console.log(`Updated ${station.name} ${station.address}${type[0]}: ${old} => ${price[1]}`) }})
+                                break;
                             default:
                                 console.log(`Unknown gas type found: ${type[0]}`)
                                 break;
@@ -89,7 +84,6 @@ class MapManager {
             }
 
         });
-
         return station
 
     }
