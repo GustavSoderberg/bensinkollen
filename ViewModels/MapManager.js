@@ -34,7 +34,7 @@ class MapManager {
 
         } else {
 
-            const updatedStations = [] 
+            const updatedStations = []
             localstorage = await fetchLatLng(localstorage)
 
             await localstorage.forEach(station => {
