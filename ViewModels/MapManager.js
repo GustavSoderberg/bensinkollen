@@ -34,7 +34,7 @@ class MapManager {
 
         } else {
 
-            const updatedStations = [] 
+            const updatedStations = []
             localstorage = await fetchLatLng(localstorage)
 
             await localstorage.forEach(station => {
@@ -64,19 +64,19 @@ class MapManager {
 
                         switch (type[0].toLowerCase()) {
                             case '95':
-                                result.types.forEach(price => { if (type[1] != price[1]) { type[1] = price[1] } })
+                                result.types.forEach(price => {console.log(type[1] + " " + result[1]); if (type[1] != price[1]) { type[1] = price[1]; console.log(`Updated price of ${type[0]} from ${result[1]} to ${type[1]} ${station.name}`)} })
                                 break;
                             case '98':
-                                result.types.forEach(price => { if (type[1] != price[1]) { type[1] = price[1] } })
+                                result.types.forEach(price => { if (type[1] != price[1]) { type[1] = price[1]; console.log(`Updated price of ${type[0]} from ${result[1]} to ${type[1]} ${station.name}`)} })
                                 break;
                             case 'diesel':
-                                result.types.forEach(price => { if (type[1] != price[1]) { type[1] = price[1] } })
+                                result.types.forEach(price => { if (type[1] != price[1]) { type[1] = price[1]; console.log(`Updated price of ${type[0]} from ${result[1]} to ${type[1]} ${station.name}`)} })
                                 break;
                             case 'etanol':
-                                result.types.forEach(price => { if (type[1] != price[1]) { type[1] = price[1] } })
+                                result.types.forEach(price => { if (type[1] != price[1]) { type[1] = price[1]; console.log(`Updated price of ${type[0]} from ${result[1]} to ${type[1]} ${station.name}`)} })
                                 break;
                             case 'fordonsgas':
-                                result.types.forEach(price => { if (type[1] != price[1]) { type[1] = price[1] } })
+                                result.types.forEach(price => { if (type[1] != price[1]) { type[1] = price[1]; console.log(`Updated price of ${type[0]} from ${result[1]} to ${type[1]} ${station.name}`)} })
                             break;
                             default:
                                 console.log(`Unknown gas type found: ${type[0]}`)

@@ -47,13 +47,14 @@ const DropdownComponent = () => {
     })();
   }, []);
 
-  var text = 'Waiting..';
+  var text = 'Waiting...!';
   if (errorMsg) {
-    text = errorMsg;
+    text = errorMsg; 
   } else if (location) {
-    text = location.coords.latitude;
+    text = location;
+    mapManager.currentUser.lat = location.coords.latitude
+    mapManager.currentUser.long = location.coords.longitude
   }
-  // console.log(text)
   return (
       <View>
     <View style={styles.container}>
@@ -103,8 +104,9 @@ const DropdownComponent = () => {
           latitude: (n.lat),
           longitude: (n.long),
         }}
+        key={n.key}
         >
-          <Image source={(n.logo)} style={{ width: settings.LogoWidth, height: settings.LogoHeight }} />
+          {/* <Image source={(n.logo)} style={{ width: settings.LogoWidth, height: settings.LogoHeight }} /> */}
           <Callout>
             <Text style={{width: 50, height: 15 }}>{n.name}</Text>
           </Callout>
