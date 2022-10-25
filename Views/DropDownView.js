@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Image, Dimensions, StyleSheet, Text, View, ScrollView, PermissionsAndroid } from 'react-native';
+import { Image, Dimensions, StyleSheet, Text, View, ScrollView, PermissionsAndroid, SafeAreaView } from 'react-native';
 import MapView, { Callout, Circle, Marker } from "react-native-maps"
 import { mapManager } from '../ViewModels/MapManager';
 import { settings } from '../Models/Settings';
 import { Dropdown } from 'react-native-element-dropdown';
+
 
 const data = [
   { label: '1 km', value: '1000' },
@@ -21,7 +22,7 @@ const DropdownComponent = () => {
     if (value || isFocus) {
       return (
         <Text style={[styles.label, isFocus && { color: 'black' }]}>
-          Dropdown label
+          Search Radius
         </Text>
       );
     }
@@ -38,6 +39,7 @@ const DropdownComponent = () => {
         selectedTextStyle={styles.selectedTextStyle}
         inputSearchStyle={styles.inputSearchStyle}
         iconStyle={styles.iconStyle}
+        itemStyle={styles.item}
         data={data}
       //search  search
         maxHeight={300}
@@ -93,22 +95,29 @@ const styles = StyleSheet.create({
       map: {
         width: Dimensions.get("window").width,
         height: Dimensions.get("window").height
-        
       },
   container: {
     position: 'absolute',
     zIndex: 90,
-    padding: 16,
+    paddingHorizontal: 16,
     width: '40%',
   },
   //dropdown button collapsed vvv
   dropdown: {
     height: 50,
-    borderColor: 'white',
+    width: 110,
     backgroundColor: 'blue',
-    borderWidth: 0.5,
+    //borderColor: 'white',
+    //borderWidth: 1,
     borderRadius: 8,
     paddingHorizontal: 8,
+    paddingTop: 8,
+    top: 20,
+  },
+  item: {
+    width: 110,
+    color: 'blue',
+    padding: 2,
   },
   icon: {
     marginRight: 5,
@@ -116,12 +125,14 @@ const styles = StyleSheet.create({
   //top label vvv
   label: {
     position: 'absolute',
-    backgroundColor: 'white',
-    left: 22,
-    top: 8,
+    backgroundColor: 'blue',
+    borderRadius: 8,
+    left: 16,
+    top: 16,
     zIndex: 999,
     paddingHorizontal: 8,
     fontSize: 14,
+    width: 110,
   },
   placeholderStyle: {
     fontSize: 16,

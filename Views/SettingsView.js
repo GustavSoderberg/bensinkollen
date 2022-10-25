@@ -53,7 +53,7 @@ export default class Home extends React.Component {
       borderRadius: 25,
       backgroundColor:'#FCE4EC',
       marginVertical: 10,
-      paddingVertical:16
+      paddingVertical: 16,
   
     },
     input: {
