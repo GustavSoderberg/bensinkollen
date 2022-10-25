@@ -19,7 +19,7 @@ class MapManager {
 
         console.log("MapManager - initialize()")
         const henrikhjelm = await getBensinmack()
-        const calcGasStations = []
+        var calcGasStations = []
 
         // storeData(updatedList)
         // clearAll()
@@ -33,14 +33,14 @@ class MapManager {
             this.listOfGasStations = stations
             storeData(this.listOfGasStations)
             
+            calcGasStations = []
             this.listOfGasStations.forEach(station => {
                 const result = this.calculate(station)
                 if ( result <= radius ) {
                     calcGasStations.push(station)
                 }
             });
-
-
+            console.log("fetched just now: " + calcGasStations)
             return(calcGasStations)
 
         } else {
@@ -58,13 +58,18 @@ class MapManager {
             this.listOfGasStations = updatedStations
             storeData(this.listOfGasStations)
 
+            calcGasStations = []
             this.listOfGasStations.forEach(station => {
                 const result = this.calculate(station)
                 if ( result <= radius ) {
                     calcGasStations.push(station)
                 }
             });
-            return(this.calcGasStations)
+            console.log("local storage: " + calcGasStations.length)
+            calcGasStations.forEach(stat =>{
+                console.log(stat)
+            })
+            return(calcGasStations)
         }
 
     }
@@ -109,30 +114,20 @@ class MapManager {
 
     calculate(station) {
 
-    // The math module contains a function
-    // named toRadians which converts from
-    // degrees to radians.
-    lat1 = this.currentUser.lat * Math.PI / 180;
-    lon1 =  this.currentUser.long  * Math.PI / 180;
-    lat2 = station.lat * Math.PI / 180;
-    lon2 = station.long * Math.PI / 180;
+    //Values
+    let lat1 = this.currentUser.lat * 111139;
+    let lon1 = this.currentUser.long * 111139;
+    let lat2 = station.lat * 111139;
+    let lon2 = station.long * 111139;
 
-    // Haversine formula
-    let dlon = lon2 - lon1;
-    let dlat = lat2 - lat1;
-    let a = Math.pow(Math.sin(dlat / 2), 2)
-    + Math.cos(lat1) * Math.cos(lat2)
-    * Math.pow(Math.sin(dlon / 2),2);
+    //get hypotenusa upphöjt till 2
+    var o = Math.pow((lat1 - lat2), 2) + Math.pow((lon1 - lon2), 2) 
 
-    let c = 2 * Math.asin(Math.sqrt(a));
-
-    // Radius of earth in kilometers. Use 3956
-    // for miles
-    let r = 6371;
-
-    console.log((c * r)/1000);
+    //get length in meter
+    // console.log(Math.sqrt(o))
+    // console.log('-----------------');
     // calculate the result and return in meters
-    return((c * r)/1000);
+    return(Math.sqrt(o));
 
     }
 }
