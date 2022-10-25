@@ -15,10 +15,11 @@ class MapManager {
     }
 
 
-    async initialize() {
+    async initialize(radius) {
 
         console.log("MapManager - initialize()")
         const henrikhjelm = await getBensinmack()
+        var calcGasStations = []
 
         // storeData(updatedList)
         // clearAll()
@@ -31,6 +32,16 @@ class MapManager {
             this.listOfGasStations = []
             this.listOfGasStations = stations
             storeData(this.listOfGasStations)
+            
+            calcGasStations = []
+            this.listOfGasStations.forEach(station => {
+                const result = this.calculate(station)
+                if ( result <= radius ) {
+                    calcGasStations.push(station)
+                }
+            });
+            console.log("fetched just now: " + calcGasStations)
+            return(calcGasStations)
 
         } else {
 
@@ -46,6 +57,19 @@ class MapManager {
             this.listOfGasStations = []
             this.listOfGasStations = updatedStations
             storeData(this.listOfGasStations)
+
+            calcGasStations = []
+            this.listOfGasStations.forEach(station => {
+                const result = this.calculate(station)
+                if ( result <= radius ) {
+                    calcGasStations.push(station)
+                }
+            });
+            console.log("local storage: " + calcGasStations.length)
+            calcGasStations.forEach(stat =>{
+                console.log(stat)
+            })
+            return(calcGasStations)
         }
 
     }
@@ -88,6 +112,24 @@ class MapManager {
 
     }
 
+    calculate(station) {
+
+    //Values
+    let lat1 = this.currentUser.lat * 111139;
+    let lon1 = this.currentUser.long * 111139;
+    let lat2 = station.lat * 111139;
+    let lon2 = station.long * 111139;
+
+    //get hypotenusa upphöjt till 2
+    var o = Math.pow((lat1 - lat2), 2) + Math.pow((lon1 - lon2), 2) 
+
+    //get length in meter
+    // console.log(Math.sqrt(o))
+    // console.log('-----------------');
+    // calculate the result and return in meters
+    return(Math.sqrt(o));
+
+    }
 }
 
 const mapManager = new MapManager(User(59.361631, 17.959703))
