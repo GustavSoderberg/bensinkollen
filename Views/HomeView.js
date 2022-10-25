@@ -8,6 +8,7 @@ import { ApiManager, getBensinmack, fetchStations, apiManager } from '../ViewMod
 import { settings } from '../Models/Settings';
 
 import DropdownComponent from './DropDownView';
+import DropdownTwo from './DropDownView';
 
 
 
@@ -22,7 +23,6 @@ export default class Home extends React.Component {
       <ScrollView style={{ marginTop: 0}}>
       <DropdownComponent/>
       </ScrollView>
-      
       
       );
     }
@@ -44,6 +44,5 @@ export default class Home extends React.Component {
     map: {
       width: Dimensions.get("window").width,
       height: Dimensions.get("window").height
-      
     }
   })
