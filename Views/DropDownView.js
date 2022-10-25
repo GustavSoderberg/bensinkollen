@@ -21,6 +21,8 @@ const bgColor = 'rgba(30, 124, 220, 0.65)'
 const DropdownComponent = () => {
   const [value, setValue] = useState(3000);
   const [isFocus, setIsFocus] = useState(false);
+  const [fetchedStations, setfetchedStations] = useState([]);
+
 
   const renderLabel = () => {
     if (value || isFocus) {
@@ -33,9 +35,10 @@ const DropdownComponent = () => {
     return null;
   };
 
+
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
-
+[]
   useEffect(() => {
     (async () => {
       
@@ -46,7 +49,14 @@ const DropdownComponent = () => {
       }
 
       let location = await Location.getCurrentPositionAsync({});
-      setLocation(location);
+      // setLocation(location);
+    })();
+
+    (async () => {
+
+      const stations = await mapManager.initialize(value)
+      setfetchedStations(stations)
+
     })();
   }, []);
 
@@ -105,18 +115,16 @@ const DropdownComponent = () => {
       provider="google"
       >
       
-      {/*<Marker coordinate={{ latitude: n.lat, longitude: n.long }} />*/}
-      
       <Circle center={{ latitude: mapManager.currentUser.lat, longitude: mapManager.currentUser.long }} radius={parseInt(value)} />
       
-       { mapManager.listOfGasStations.map(n => (
+       { fetchedStations.map(n => (
         <Marker coordinate={{
           latitude: (n.lat),
           longitude: (n.long),
         }}
         key={n.key}
         >
-          { <Image source={(n.logo)} style={{ width: settings.LogoWidth, height: settings.LogoHeight }} /> }
+          {/* <Image source={(n.logo)} style={{ width: settings.LogoWidth, height: settings.LogoHeight }} /> */}
           <Callout>
             <Text style={{width: 50, height: 15 }}>{n.name}</Text>
           </Callout>
