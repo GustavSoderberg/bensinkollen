@@ -95,9 +95,11 @@ const DropdownComponent = () => {
         onFocus={() => setIsFocus(true)}
         onBlur={() => setIsFocus(false)}
         onChange={item => {
-        settings.RadiusConstant = value
+        // settings.RadiusConstant = value
           setValue(item.value);
           setIsFocus(false);
+          setfetchedStations(item.value);
+          mapManager.initialize(item.value);
         }}
       />
     </View>
@@ -117,19 +119,19 @@ const DropdownComponent = () => {
       
       <Circle center={{ latitude: mapManager.currentUser.lat, longitude: mapManager.currentUser.long }} radius={parseInt(value)} />
       
-       { fetchedStations.map(n => (
+       {/* {fetchedStations.map(n => (
         <Marker coordinate={{
           latitude: (n.lat),
           longitude: (n.long),
         }}
         key={n.key}
         >
-          {/* <Image source={(n.logo)} style={{ width: settings.LogoWidth, height: settings.LogoHeight }} /> */}
+          { <Image source={(n.logo)} style={{ width: settings.LogoWidth, height: settings.LogoHeight }} />}
           <Callout>
             <Text style={{width: 50, height: 15 }}>{n.name}</Text>
           </Callout>
         </Marker>
-        )) }
+        )) } */}
       
       </MapView> 
       </View> 
