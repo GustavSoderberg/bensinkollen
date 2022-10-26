@@ -94,7 +94,7 @@ const DropdownComponent = () => {
         itemTextStyle={styles.itemText}
         data={data}
       //search  search
-        maxHeight={300}
+        //maxHeight={300}
         labelField="label"
         valueField={!isFocus ? value/1000 + " km" : '...'}
         placeholder={!isFocus ? value/1000 + " km" : '...'}
@@ -108,7 +108,6 @@ const DropdownComponent = () => {
           setfetchedStations(station)
           setValue(item.value);
           setIsFocus(false);
-
         }}
       />
     </View>
@@ -186,8 +185,6 @@ dropdown: {
 height: 60,
 width: 120,
 backgroundColor: bgColor,
-//borderColor: 'black',
-//borderWidth: 1,
 borderTopStartRadius: 8,
 borderTopEndRadius: 8,
 paddingHorizontal: 8,
@@ -208,15 +205,18 @@ itemContainer:{
 
 //item in list vvv
 item: {
-  backgroundColor: 'transparent',
+  backgroundColor: bgColor,
+  marginHorizontal: 3,
+  marginVertical: 1,
+  borderRadius: 5,
   //shadowColor: 'black',
   //borderColor: 'black',
   //borderWidth: 1,
-  height: 30,
-  paddingTop: -20,
-  position: 'relative',
-  top: -13,
-  bottom: 5,
+  maxHeight: 30,
+  paddingTop: 0,
+  //position: 'relative',
+  //top: -13,
+  //bottom: 5,
 },
 
 //item text in list vvv
@@ -224,7 +224,7 @@ itemText: {
   color: 'white',
   fontSize: 16,
   //backgroundColor: 'green',
-  height: '100%'
+  height: '100%',
 },
 
 //selected text before selecting vvv
