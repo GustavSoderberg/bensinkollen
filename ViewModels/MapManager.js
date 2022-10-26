@@ -40,7 +40,7 @@ class MapManager {
                     calcGasStations.push(station)
                 }
             });
-            console.log("fetched just now: " + calcGasStations)
+            // console.log("fetched just now: " + calcGasStations)
             return(calcGasStations)
 
         } else {
@@ -65,10 +65,10 @@ class MapManager {
                     calcGasStations.push(station)
                 }
             });
-            console.log("local storage: " + calcGasStations.length)
-            calcGasStations.forEach(stat =>{
-                console.log(stat)
-            })
+            // console.log("local storage: " + calcGasStations.length)
+            // calcGasStations.forEach(stat =>{
+            //     console.log(stat)
+            // })
             return(calcGasStations)
         }
 
@@ -132,6 +132,6 @@ class MapManager {
     }
 }
 
-const mapManager = new MapManager(User(59.361631, 17.959703))
+const mapManager = new MapManager(User(0, 0))
 
 export { mapManager }
