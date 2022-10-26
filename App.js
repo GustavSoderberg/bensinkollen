@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, PermissionsAndroid, Button } from 'react-native';
+import { StyleSheet, Text, View, PermissionsAndroid, Button, Image } from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -28,6 +28,14 @@ import AboutView from './Views/AboutView';
 //     console.warn(err);
 //   }
 // };
+function LogoTitle() {
+  return (
+    <Image
+      style={{ width: 40, height: 40}}
+      source={require('./assets/icon.png')}
+    />
+  );
+}
 
 const Tab = createBottomTabNavigator();
 
@@ -38,7 +46,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Tab.Navigator>
-        <Tab.Screen name="Home" component={HomeView} Icons="grid"/>
+        <Tab.Screen name="Home" component={HomeView} Icons="grid" options={{ headerTitle: (props) => <LogoTitle {...props} /> }}/>
         <Tab.Screen name="About us" component={AboutView} />
       </Tab.Navigator>
     </NavigationContainer>

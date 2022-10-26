@@ -4,6 +4,7 @@ import MapView, { Callout, Circle, Marker } from "react-native-maps"
 import { mapManager } from '../ViewModels/MapManager';
 import { settings } from '../Models/Settings';
 import { Dropdown } from 'react-native-element-dropdown';
+import uuid from 'react-native-uuid';
 
 import * as Location from 'expo-location'; 
 import { Colors } from 'react-native/Libraries/NewAppScreen';
