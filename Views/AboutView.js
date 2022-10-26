@@ -7,7 +7,7 @@ export default class AboutView extends React.Component {
     render() {
         return (
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <Image source={require('../assets/logos/bensinkollen_logo.png')} style={{ width: 100, height: 100 }} />
+                <Image source={require('../assets/logos/BK_icon_only_1024.png')} style={{ width: 100, height: 100 }} />
                 <Text style={{ marginTop: 50}}>We are not held liable if you run out of gas</Text>
                 <Text style={{ marginTop: 50, fontWeight: "bold"}}>This app was created by</Text>
                 <Text>Gustav</Text>
