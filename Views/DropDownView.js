@@ -51,8 +51,14 @@ const DropdownComponent = () => {
       let location = await Location.getCurrentPositionAsync({});
       setLocationLat(location.coords.latitude)
       setLocationLong(location.coords.longitude)
+      mapManager.currentUser.lat = locationLat
+      mapManager.currentUser.long = locationLong
       mapManager.setUserCoordinates(location.coords.latitude, location.coords.longitude)
-      
+
+      await new Promise(resolve => setTimeout(resolve, 500));
+
+      setLocationLat(location.coords.latitude)
+      setLocationLong(location.coords.longitude)
 
             
       const station = await mapManager.initialize(3000)
