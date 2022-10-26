@@ -7,6 +7,7 @@ class MapManager {
 
     currentUser = User
     listOfGasStations = []
+    calcGasStations = []
 
     constructor(currentUser) {
 
@@ -14,17 +15,24 @@ class MapManager {
         
     }
 
+    setUserCoordinates(lat, lng) {
+
+        this.currentUser.lat = lat
+        this.currentUser.long = lng
+
+    }
 
     async initialize(radius) {
 
         console.log("MapManager - initialize()")
         const henrikhjelm = await getBensinmack()
-        var calcGasStations = []
 
         // storeData(updatedList)
         // clearAll()
 
         var localstorage = await getData()
+
+        
         if (localstorage === "empty") {
 
             const stations = await fetchLatLng(henrikhjelm)
@@ -33,43 +41,45 @@ class MapManager {
             this.listOfGasStations = stations
             storeData(this.listOfGasStations)
             
-            calcGasStations = []
+            this.calcGasStations = []
             this.listOfGasStations.forEach(station => {
                 const result = this.calculate(station)
                 if ( result <= radius ) {
-                    calcGasStations.push(station)
+                    this.calcGasStations.push(station)
                 }
             });
-            console.log("fetched just now: " + calcGasStations)
-            return(calcGasStations)
+            // console.log("fetched just now: " + calcGasStations)
+            return(this.calcGasStations)
 
         } else {
-
             const updatedStations = []
             localstorage = await fetchLatLng(localstorage)
             
             await localstorage.forEach(station => {
                 const uStation = this.compare(station, henrikhjelm)
                 updatedStations.push(uStation)
+                
 
             });
-
             this.listOfGasStations = []
             this.listOfGasStations = updatedStations
             storeData(this.listOfGasStations)
 
-            calcGasStations = []
+            this.calcGasStations = []
+
             this.listOfGasStations.forEach(station => {
                 const result = this.calculate(station)
                 if ( result <= radius ) {
-                    calcGasStations.push(station)
+                    this.calcGasStations.push(station)
+                    
                 }
             });
-            console.log("local storage: " + calcGasStations.length)
-            calcGasStations.forEach(stat =>{
-                console.log(stat)
-            })
-            return(calcGasStations)
+            // console.log("local storage: " + this.calcGasStations.length)
+            // console.log("whole list: " + this.listOfGasStations.length)
+            // calcGasStations.forEach(stat =>{
+            //     console.log(stat)
+            // })
+            return(this.calcGasStations)
         }
 
     }
@@ -130,8 +140,23 @@ class MapManager {
     return(Math.sqrt(o));
 
     }
+
+    navigate(lat, lng) {
+
+        const scheme = Platform.select({ ios: 'maps:0,0?q=', android: 'geo:0,0?q=' });
+        const latLng = `${lat},${lng}`;
+        const label = 'Custom Label';
+        const url = Platform.select({
+          ios: `${scheme}${label}@${latLng}`,
+          android: `${scheme}${latLng}(${label})`
+        });
+        
+            
+        Linking.openURL(url);
+
+    }
 }
 
-const mapManager = new MapManager(User(59.361631, 17.959703))
+const mapManager = new MapManager(User(0, 0))
 
 export { mapManager }

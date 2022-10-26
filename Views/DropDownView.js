@@ -18,11 +18,15 @@ const data = [
 ];
 
 const bgColor = 'rgba(30, 124, 220, 0.65)'
+const lineColor = 'rgba(0, 90, 200, 0.65)'
 
 const DropdownComponent = () => {
   const [value, setValue] = useState(3000);
   const [isFocus, setIsFocus] = useState(false);
-  const [fetchedStations, setfetchedStations] = useState([]);
+  const [fetchedStations, setFetchedStations] = useState([]);
+  const [locationLat, setLocationLat] = useState(0);
+  const [locationLong, setLocationLong] = useState(0);
+  const [errorMsg, setErrorMsg] = useState(null);
 
 
   const renderLabel = () => {
@@ -36,10 +40,6 @@ const DropdownComponent = () => {
     return null;
   };
 
-
-  const [location, setLocation] = useState(null);
-  const [errorMsg, setErrorMsg] = useState(null);
-[]
   useEffect(() => {
     (async () => {
       
@@ -50,25 +50,35 @@ const DropdownComponent = () => {
       }
 
       let location = await Location.getCurrentPositionAsync({});
-      // setLocation(location);
-    })();
+      setLocationLat(location.coords.latitude)
+      setLocationLong(location.coords.longitude)
+      mapManager.currentUser.lat = locationLat
+      mapManager.currentUser.long = locationLong
+      mapManager.setUserCoordinates(location.coords.latitude, location.coords.longitude)
 
-    (async () => {
-      const stations = await mapManager.initialize(value)
-      setfetchedStations(stations)
+      await new Promise(resolve => setTimeout(resolve, 500));
 
+      setLocationLat(location.coords.latitude)
+      setLocationLong(location.coords.longitude)
+
+      const station = await mapManager.initialize(3000)
+      // await console.log(station)
+      setValue(value)
+
+      setFetchedStations(station)
+      
     })();
   }, []);
 
   var text = 'Waiting...!';
   if (errorMsg) {
     text = errorMsg; 
-  } else if (location) {
-    text = location;
-    mapManager.currentUser.lat = location.coords.latitude
-    mapManager.currentUser.long = location.coords.longitude
+  } else if (locationLat) {
+    mapManager.currentUser.lat = locationLat
+    mapManager.currentUser.long = locationLong
   }
   return (
+    
       <View>
     <View style={styles.container}>
       {renderLabel()}
@@ -86,7 +96,7 @@ const DropdownComponent = () => {
         itemTextStyle={styles.itemText}
         data={data}
       //search  search
-        maxHeight={300}
+        statusBarIsTranslucent={true}
         labelField="label"
         valueField={!isFocus ? value/1000 + " km" : '...'}
         placeholder={!isFocus ? value/1000 + " km" : '...'}
@@ -95,19 +105,17 @@ const DropdownComponent = () => {
         onFocus={() => setIsFocus(true)}
         onBlur={() => setIsFocus(false)}
         onChange={async (item) => {
-        // settings.RadiusConstant = value
-          const station = await mapManager.initialize(item.value);
-          setfetchedStations(station)
-          setValue(item.value);
           setIsFocus(false);
-
+          setValue(item.value);
+          const station = await mapManager.initialize(item.value);
+          setFetchedStations(station)
         }}
       />
     </View>
       <MapView style={styles.map}
-      initialRegion={{
-        latitude: (mapManager.currentUser.lat),
-        longitude: (mapManager.currentUser.long),
+      region={{
+        latitude: (locationLat != 0 ? locationLat : 40),
+        longitude: (locationLong),
         latitudeDelta: ((settings.LatDelta)),
         longitudeDelta: ((settings.LngDelta)),
       }}
@@ -127,9 +135,27 @@ const DropdownComponent = () => {
         }}
         key={n.key}
         >
-          {/* { <Image source={(n.logo)} style={{ width: settings.LogoWidth, height: settings.LogoHeight }} />} */}
-          <Callout>
-            <Text style={{width: 50, height: 15 }}>{n.name}</Text>
+          <Image source={(
+          n.name.toLowerCase() == "circle k" ? require('../assets/logos/circlek_pin.png'):
+          n.name.toLowerCase() == "ingo" ? require('../assets/logos/ingo_pin.png'):
+          n.name.toLowerCase() == "okq8" ? require('../assets/logos/okq8_pin.png'):
+          n.name.toLowerCase() == "preem" ? require('../assets/logos/preem_pin.png'):
+          n.name.toLowerCase() == "st1" ? require('../assets/logos/st1_pin.png'):
+          n.name.toLowerCase() == "tanka" ? require('../assets/logos/tanka_pin.png'):
+          require('../assets/logos/default_pin.png'))}
+          style={{ width: settings.LogoWidth, height: settings.LogoHeight }} />
+          <Callout tooltip={true} style={{flex:1, justifyContent:'center', alignItems:'center', backgroundColor: bgColor, borderRadius: 8, padding: 4}}>
+            <Text style={{ width: 100}}>
+              {n.types.map(k => 
+              <Text style={{height: 'auto'}} key={uuid.v4()}>
+                
+                  <Text style={{
+                  fontWeight: "bold", alignSelf: 'flex-start', minWidth: '60%', color: '#FFF'}}>{k[0]} - </Text>
+                  <Text style={{alignSelf: 'flex-end', color: '#FFF'}}>{k[1] + "\n"}</Text>
+                
+              </Text>
+              )}
+            </Text>
           </Callout>
         </Marker>
         )) }
@@ -146,7 +172,7 @@ const styles = StyleSheet.create({
     fontSize:16,
     fontWeight:'500',
     color:'#212121',
-    textAlign:'center'
+    textAlign: 'center'
   },
   map: {
     width: Dimensions.get("window").width,
@@ -175,11 +201,9 @@ label: {
 
 //dropdown button collapsed vvv
 dropdown: {
-height: 60,
+height: 50,
 width: 120,
 backgroundColor: bgColor,
-//borderColor: 'black',
-//borderWidth: 1,
 borderTopStartRadius: 8,
 borderTopEndRadius: 8,
 paddingHorizontal: 8,
@@ -191,32 +215,36 @@ color: 'white'
 //container for items vvv
 itemContainer:{
   borderWidth: 0,
+  borderTopWidth: 1,
+  borderColor: lineColor,
   shadowColor: 'transparent',
   backgroundColor: bgColor,
-  marginTop: -26, 
+  marginTop: -2, 
   borderBottomStartRadius: 8,
   borderBottomEndRadius: 8,
+  paddingHorizontal: 3,
+  paddingBottom: 2,
 },
 
 //item in list vvv
 item: {
+  flex: 1,
+  alignItems: 'center',
+  justifyContent: 'center',
   backgroundColor: 'transparent',
-  //shadowColor: 'black',
-  //borderColor: 'black',
-  //borderWidth: 1,
-  height: 30,
-  paddingTop: -20,
-  position: 'relative',
-  top: -13,
-  bottom: 5,
+  //backgroundColor: bgColor,
+  //borderRadius: 5,
+  //marginVertical: 1,
+  height: 25,
 },
 
 //item text in list vvv
 itemText: {
   color: 'white',
+  height: '100%',
   fontSize: 16,
+  //minWidth: 110,
   //backgroundColor: 'green',
-  height: '100%'
 },
 
 //selected text before selecting vvv
