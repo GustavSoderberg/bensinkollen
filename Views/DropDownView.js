@@ -23,7 +23,7 @@ const lineColor = 'rgba(0, 90, 200, 0.65)'
 const DropdownComponent = () => {
   const [value, setValue] = useState(3000);
   const [isFocus, setIsFocus] = useState(false);
-  const [fetchedStations, setfetchedStations] = useState([]);
+  const [fetchedStations, setFetchedStations] = useState([]);
   const [locationLat, setLocationLat] = useState(0);
   const [locationLong, setLocationLong] = useState(0);
   const [errorMsg, setErrorMsg] = useState(null);
@@ -50,21 +50,17 @@ const DropdownComponent = () => {
       }
 
       let location = await Location.getCurrentPositionAsync({});
-      console.log(location)
       setLocationLat(location.coords.latitude)
       setLocationLong(location.coords.longitude)
-      mapManager.currentUser.lat = locationLat
-      mapManager.currentUser.long = locationLong
-      console.log(location.coords.latitude)
+      mapManager.setUserCoordinates(location.coords.latitude, location.coords.longitude)
+      
 
-      await new Promise(resolve => setTimeout(resolve, 500));
+            
+      const station = await mapManager.initialize(3000)
+      // await console.log(station)
+      setValue(value)
 
-      setLocationLat(location.coords.latitude)
-      setLocationLong(location.coords.longitude)
-      console.log(location.coords.latitude)
-
-      const stations = await mapManager.initialize(value)
-      setfetchedStations(stations)
+      setFetchedStations(station)
       
     })();
   }, []);
@@ -108,7 +104,11 @@ const DropdownComponent = () => {
           setIsFocus(false);
           setValue(item.value);
           const station = await mapManager.initialize(item.value);
-          setfetchedStations(station)
+
+          setFetchedStations(station)
+          setValue(item.value);
+          setIsFocus(false);
+
         }}
       />
     </View>
@@ -135,7 +135,15 @@ const DropdownComponent = () => {
         }}
         key={n.key}
         >
-          {/* <Image source={(n.logo)} style={{ width: settings.LogoWidth, height: settings.LogoHeight }} /> */}
+          <Image source={(
+          n.name.toLowerCase() == "circle k" ? require('../assets/logos/circlek_pin.png'):
+          n.name.toLowerCase() == "ingo" ? require('../assets/logos/ingo_pin.png'):
+          n.name.toLowerCase() == "okq8" ? require('../assets/logos/okq8_pin.png'):
+          n.name.toLowerCase() == "preem" ? require('../assets/logos/preem_pin.png'):
+          n.name.toLowerCase() == "st1" ? require('../assets/logos/st1_pin.png'):
+          n.name.toLowerCase() == "tanka" ? require('../assets/logos/tanka_pin.png'):
+          require('../assets/logos/default_pin.png'))}
+          style={{ width: settings.LogoWidth, height: settings.LogoHeight }} />
           <Callout>
             <Text style={{width: 50, height: 15 }}>{n.name}</Text>
           </Callout>
