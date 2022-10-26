@@ -61,7 +61,6 @@ const DropdownComponent = () => {
       setLocationLat(location.coords.latitude)
       setLocationLong(location.coords.longitude)
 
-            
       const station = await mapManager.initialize(3000)
       // await console.log(station)
       setValue(value)
@@ -97,7 +96,6 @@ const DropdownComponent = () => {
         itemTextStyle={styles.itemText}
         data={data}
       //search  search
-        //maxHeight={300}
         statusBarIsTranslucent={true}
         labelField="label"
         valueField={!isFocus ? value/1000 + " km" : '...'}
@@ -110,11 +108,7 @@ const DropdownComponent = () => {
           setIsFocus(false);
           setValue(item.value);
           const station = await mapManager.initialize(item.value);
-
           setFetchedStations(station)
-          setValue(item.value);
-          setIsFocus(false);
-
         }}
       />
     </View>
@@ -249,6 +243,7 @@ itemText: {
   color: 'white',
   height: '100%',
   fontSize: 16,
+  //minWidth: 110,
   //backgroundColor: 'green',
 },
 
