@@ -66,7 +66,7 @@ class MapManager {
                 }
             });
             console.log("local storage: " + calcGasStations.length)
-            calcGasStations.forEach(stat =>{
+            this.calcGasStations.forEach(stat =>{
                 console.log(stat)
             })
             return(calcGasStations)
