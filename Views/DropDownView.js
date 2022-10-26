@@ -7,6 +7,7 @@ import { Dropdown } from 'react-native-element-dropdown';
 
 import * as Location from 'expo-location'; 
 import { Colors } from 'react-native/Libraries/NewAppScreen';
+import { GasStation } from '../Models/GasStation';
 
 const data = [
   { label: '1 km', value: '1000' },
@@ -22,6 +23,9 @@ const DropdownComponent = () => {
   const [value, setValue] = useState(3000);
   const [isFocus, setIsFocus] = useState(false);
   const [fetchedStations, setfetchedStations] = useState([]);
+  const [locationLat, setLocationLat] = useState(0);
+  const [locationLong, setLocationLong] = useState(0);
+  const [errorMsg, setErrorMsg] = useState(null);
 
 
   const renderLabel = () => {
@@ -35,10 +39,6 @@ const DropdownComponent = () => {
     return null;
   };
 
-
-  const [location, setLocation] = useState(null);
-  const [errorMsg, setErrorMsg] = useState(null);
-[]
   useEffect(() => {
     (async () => {
       
@@ -49,26 +49,34 @@ const DropdownComponent = () => {
       }
 
       let location = await Location.getCurrentPositionAsync({});
-      // setLocation(location);
-    })();
+      console.log(location)
+      setLocationLat(location.coords.latitude)
+      setLocationLong(location.coords.longitude)
+      mapManager.currentUser.lat = locationLat
+      mapManager.currentUser.long = locationLong
+      console.log(location.coords.latitude)
 
-    (async () => {
+      await new Promise(resolve => setTimeout(resolve, 500));
+
+      setLocationLat(location.coords.latitude)
+      setLocationLong(location.coords.longitude)
+      console.log(location.coords.latitude)
 
       const stations = await mapManager.initialize(value)
       setfetchedStations(stations)
-
+      
     })();
   }, []);
 
   var text = 'Waiting...!';
   if (errorMsg) {
     text = errorMsg; 
-  } else if (location) {
-    text = location;
-    mapManager.currentUser.lat = location.coords.latitude
-    mapManager.currentUser.long = location.coords.longitude
+  } else if (locationLat) {
+    mapManager.currentUser.lat = locationLat
+    mapManager.currentUser.long = locationLong
   }
   return (
+    
       <View>
     <View style={styles.container}>
       {renderLabel()}
@@ -94,18 +102,19 @@ const DropdownComponent = () => {
         value={value}
         onFocus={() => setIsFocus(true)}
         onBlur={() => setIsFocus(false)}
-        onChange={item => {
+        onChange={async (item) => {
         // settings.RadiusConstant = value
+          const station = await mapManager.initialize(item.value);
+          setfetchedStations(station)
           setValue(item.value);
           setIsFocus(false);
-          mapManager.initialize(item.value);
         }}
       />
     </View>
       <MapView style={styles.map}
-      initialRegion={{
-        latitude: (mapManager.currentUser.lat),
-        longitude: (mapManager.currentUser.long),
+      region={{
+        latitude: (locationLat),
+        longitude: (locationLong),
         latitudeDelta: ((settings.LatDelta)),
         longitudeDelta: ((settings.LngDelta)),
       }}
@@ -125,7 +134,7 @@ const DropdownComponent = () => {
         }}
         key={n.key}
         >
-          { <Image source={(n.logo)} style={{ width: settings.LogoWidth, height: settings.LogoHeight }} />}
+          {/* <Image source={(n.logo)} style={{ width: settings.LogoWidth, height: settings.LogoHeight }} /> */}
           <Callout>
             <Text style={{width: 50, height: 15 }}>{n.name}</Text>
           </Callout>
