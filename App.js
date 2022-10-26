@@ -1,12 +1,11 @@
 import * as React from 'react';
-import { StyleSheet, Text, View, PermissionsAndroid, Button, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, PermissionsAndroid, Button } from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import HomeView from './Views/HomeView';
-import SettingsView from './Views/SettingsView';
-import DropdownComponent from './Views/DropDownView';
+import AboutView from './Views/AboutView';
 
 // const requestLocationPermission = async () => {
 //   try {
@@ -36,9 +35,12 @@ const Tab = createBottomTabNavigator();
 
 export default function App() {
   return (
-    <ScrollView style={{ marginTop: 100}}>
-      <DropdownComponent/>
-    </ScrollView>
+    <NavigationContainer>
+      <Tab.Navigator>
+        <Tab.Screen name="Home" component={HomeView} Icons="grid"/>
+        <Tab.Screen name="About us" component={AboutView} />
+      </Tab.Navigator>
+    </NavigationContainer>
   );
 }
 
