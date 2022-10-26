@@ -120,7 +120,7 @@ const DropdownComponent = () => {
     </View>
       <MapView style={styles.map}
       region={{
-        latitude: (locationLat),
+        latitude: (locationLat != 0 ? locationLat : 40),
         longitude: (locationLong),
         latitudeDelta: ((settings.LatDelta)),
         longitudeDelta: ((settings.LngDelta)),
@@ -150,8 +150,18 @@ const DropdownComponent = () => {
           n.name.toLowerCase() == "tanka" ? require('../assets/logos/tanka_pin.png'):
           require('../assets/logos/default_pin.png'))}
           style={{ width: settings.LogoWidth, height: settings.LogoHeight }} />
-          <Callout>
-            <Text style={{width: 50, height: 15 }}>{n.name}</Text>
+          <Callout tooltip={true} style={{flex:1, justifyContent:'center', alignItems:'center', backgroundColor: bgColor, borderRadius: 8, padding: 4}}>
+            <Text style={{ width: 100}}>
+              {n.types.map(k => 
+              <Text style={{height: 'auto'}} key={uuid.v4()}>
+                
+                  <Text style={{
+                  fontWeight: "bold", alignSelf: 'flex-start', minWidth: '60%', color: '#FFF'}}>{k[0]} - </Text>
+                  <Text style={{alignSelf: 'flex-end', color: '#FFF'}}>{k[1] + "\n"}</Text>
+                
+              </Text>
+              )}
+            </Text>
           </Callout>
         </Marker>
         )) }

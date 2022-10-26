@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, PermissionsAndroid, Button } from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
@@ -34,6 +34,7 @@ const Tab = createBottomTabNavigator();
 // requestLocationPermission()
 
 export default function App() {
+
   return (
     <NavigationContainer>
       <Tab.Navigator>
