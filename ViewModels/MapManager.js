@@ -74,12 +74,11 @@ class MapManager {
                     
                 }
             });
-            // console.log("local storage: " + calcGasStations.length)
+            // console.log("local storage: " + this.calcGasStations.length)
+            // console.log("whole list: " + this.listOfGasStations.length)
             // calcGasStations.forEach(stat =>{
             //     console.log(stat)
             // })
-
-            
             return(this.calcGasStations)
         }
 
