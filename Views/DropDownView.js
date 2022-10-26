@@ -18,6 +18,7 @@ const data = [
 ];
 
 const bgColor = 'rgba(30, 124, 220, 0.65)'
+const lineColor = 'rgba(0, 90, 200, 0.65)'
 
 const DropdownComponent = () => {
   const [value, setValue] = useState(3000);
@@ -95,6 +96,7 @@ const DropdownComponent = () => {
         data={data}
       //search  search
         //maxHeight={300}
+        statusBarIsTranslucent={true}
         labelField="label"
         valueField={!isFocus ? value/1000 + " km" : '...'}
         placeholder={!isFocus ? value/1000 + " km" : '...'}
@@ -103,11 +105,10 @@ const DropdownComponent = () => {
         onFocus={() => setIsFocus(true)}
         onBlur={() => setIsFocus(false)}
         onChange={async (item) => {
-        // settings.RadiusConstant = value
+          setIsFocus(false);
+          setValue(item.value);
           const station = await mapManager.initialize(item.value);
           setfetchedStations(station)
-          setValue(item.value);
-          setIsFocus(false);
         }}
       />
     </View>
@@ -153,7 +154,7 @@ const styles = StyleSheet.create({
     fontSize:16,
     fontWeight:'500',
     color:'#212121',
-    textAlign:'center'
+    textAlign: 'center'
   },
   map: {
     width: Dimensions.get("window").width,
@@ -182,7 +183,7 @@ label: {
 
 //dropdown button collapsed vvv
 dropdown: {
-height: 60,
+height: 50,
 width: 120,
 backgroundColor: bgColor,
 borderTopStartRadius: 8,
@@ -196,35 +197,35 @@ color: 'white'
 //container for items vvv
 itemContainer:{
   borderWidth: 0,
+  borderTopWidth: 1,
+  borderColor: lineColor,
   shadowColor: 'transparent',
   backgroundColor: bgColor,
-  marginTop: -26, 
+  marginTop: -2, 
   borderBottomStartRadius: 8,
   borderBottomEndRadius: 8,
+  paddingHorizontal: 3,
+  paddingBottom: 2,
 },
 
 //item in list vvv
 item: {
-  backgroundColor: bgColor,
-  marginHorizontal: 3,
-  marginVertical: 1,
-  borderRadius: 5,
-  //shadowColor: 'black',
-  //borderColor: 'black',
-  //borderWidth: 1,
-  maxHeight: 30,
-  paddingTop: 0,
-  //position: 'relative',
-  //top: -13,
-  //bottom: 5,
+  flex: 1,
+  alignItems: 'center',
+  justifyContent: 'center',
+  backgroundColor: 'transparent',
+  //backgroundColor: bgColor,
+  //borderRadius: 5,
+  //marginVertical: 1,
+  height: 25,
 },
 
 //item text in list vvv
 itemText: {
   color: 'white',
+  height: '100%',
   fontSize: 16,
   //backgroundColor: 'green',
-  height: '100%',
 },
 
 //selected text before selecting vvv
