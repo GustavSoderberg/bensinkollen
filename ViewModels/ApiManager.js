@@ -1,8 +1,19 @@
+/**
+ * 
+ * ApiManager
+ * 
+ * This class handles the API fetching and sorting algorithms
+ * 
+ * @authors
+ * Hampus B
+ * Karol Ö
+ * Oscar K
+ * Gustav S
+ * 
+ */
+
 import { settings } from '../Models/Settings';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { GasStation } from '../Models/GasStation';
-import { get } from 'react-native/Libraries/Utilities/PixelRatio';
-import { googleGeocodeAsync } from 'expo-location/build/LocationGoogleGeocoding';
 
 
 async function getBensinmack() {
@@ -105,25 +116,10 @@ async function fetchLatLng(stations) {
         
         if(station.lat == "0" ) {
 
-            //ARE U SURE ABOUT UN-COMMENTING THIS?
-
-            // try {
-            //     fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${station.name}%20${station.address}&key=${settings.ApiKeyGoogle}`)
-            //     .then(json => json.json())
-            //     .then(json => {json.status != "ZERO_RESULTS" ? createGasStation(json.results[0].geometry.location.lat, json.results[0].geometry.location.lng, station) : console.log("ApiManager - fetchStations: One Google fetch returned no result")})
-            // } catch (e) {
-            //     console.log(e)
-            // }
-
             fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${station.name}%20${station.address}&key=${settings.ApiKeyGoogle}`)
             .then(json => json.json())
             .then(json => {json.status != "ZERO_RESULTS" ? counter++ && updatedStations.push(createGasStation(json, station)) : console.log("ApiManager - fetchStations: One Google fetch returned no result")})
             .catch(error => console.log(error))
-
-            // station.lat = 1
-            // station.long = 1
-            // updatedStations.push(station)
-            // counter++
 
         }
         else {
@@ -151,11 +147,7 @@ async function fetchLatLng(stations) {
 
 function createGasStation(json, station) {
 
-    //TODO: We shall calculate distance between gas station and user here
-    const station1 = GasStation(station.region, station.name, station.address, station.types, logo, json.results[0].geometry.location.lat, json.results[0].geometry.location.lng)
-    // station.logo = logo
-    // station.lat = lat
-    // station.long = lng
+    const station1 = GasStation(station.region, station.name, station.address, station.types, station.logo, json.results[0].geometry.location.lat, json.results[0].geometry.location.lng)
     return station1
 
  }

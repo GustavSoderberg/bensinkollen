@@ -1,3 +1,17 @@
+/**
+ * 
+ * MapManager
+ * 
+ * This class functions as a viewModel to the MapView, sorts and update station prices, calculating distances etc.
+ * 
+ * @authors
+ * Hampus B
+ * Karol Ö
+ * Oscar K
+ * Gustav S
+ * 
+ */
+
 import { User } from '../Models/User';
 import { storeData, getData, clearAll } from './StorageManager'
 import { getBensinmack, fetchLatLng } from './ApiManager'
@@ -28,7 +42,7 @@ class MapManager {
         const henrikhjelm = await getBensinmack()
 
         // storeData(updatedList)
-        // clearAll()
+        clearAll()
 
         var localstorage = await getData()
 
@@ -133,6 +147,7 @@ class MapManager {
     //get hypotenusa upphöjt till 2
     var o = Math.pow((lat1 - lat2), 2) + Math.pow((lon1 - lon2), 2) 
 
+    //for debugging
     //get length in meter
     // console.log(Math.sqrt(o))
     // console.log('-----------------');
