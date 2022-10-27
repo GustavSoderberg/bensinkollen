@@ -1,3 +1,17 @@
+/**
+ * 
+ * StorageManager
+ * 
+ * This class handles the local Async Storage
+ * 
+ * @authors
+ * Hampus B
+ * Karol Ö
+ * Oscar K
+ * Gustav S
+ * 
+ */
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const storeData = async (value) => {

@@ -1,3 +1,17 @@
+/**
+ * 
+ * Settings
+ * 
+ * This is a model of a Settings object
+ * 
+ * @authors
+ * Hampus B
+ * Karol Ö
+ * Oscar K
+ * Gustav S
+ * 
+ */
+
 class Settings {
 
     ApiKeyGoogle = "AIzaSyCzqQiYF_9UIykdTOgr_rZvEYBM0ubhGco"
