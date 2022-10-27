@@ -21,7 +21,7 @@ const data = [
 const bgColor = 'rgba(30, 124, 220, 0.65)'
 const lineColor = 'rgba(0, 90, 200, 0.65)'
 
-const DropdownComponent = () => {
+const FullMapView = () => {
   const [value, setValue] = useState(3000);
   const [isFocus, setIsFocus] = useState(false);
   const [fetchedStations, setFetchedStations] = useState([]);
@@ -117,8 +117,8 @@ const DropdownComponent = () => {
       region={{
         latitude: (locationLat != 0 ? locationLat : 40),
         longitude: (locationLong),
-        latitudeDelta: ((settings.LatDelta)),
-        longitudeDelta: ((settings.LngDelta)),
+        latitudeDelta: ((0.04*(value/1000))),
+        longitudeDelta: ((0.04*(value/1000))),
       }}
       showsMyLocationButton={false}
       showsCompass={false}
@@ -166,7 +166,7 @@ const DropdownComponent = () => {
   );
 }; 
 
-export default DropdownComponent;
+export default FullMapView;
 
 const styles = StyleSheet.create({
   buttonText: {

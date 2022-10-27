@@ -1,13 +1,21 @@
-import { StatusBar } from 'expo-status-bar';
+/**
+ * 
+ * AboutView
+ * 
+ * This is a view that displays information about our app creators
+ * 
+ * @authors
+ * Hampus B
+ * Karol Ö
+ * Oscar K
+ * Gustav S
+ * 
+ */
+
 import * as React from 'react';
 import { Image, Dimensions, StyleSheet, Text, View, ScrollView, PermissionsAndroid } from 'react-native';
-import MapView, { Callout, Circle, Marker } from "react-native-maps"
 
-import { mapManager } from '../ViewModels/MapManager';
-import { ApiManager, getBensinmack, fetchStations, apiManager } from '../ViewModels/ApiManager'
-import { settings } from '../Models/Settings';
-
-import DropdownComponent from './DropDownView';
+import FullMapView from './FullMapView';
 
 
 
@@ -19,7 +27,7 @@ export default class Home extends React.Component {
     return (
       
       <ScrollView style={{ marginTop: 0}}>
-      <DropdownComponent/>
+      <FullMapView/>
       </ScrollView>
       
       
