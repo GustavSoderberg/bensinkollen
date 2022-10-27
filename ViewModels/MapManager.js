@@ -42,7 +42,7 @@ class MapManager {
         const henrikhjelm = await getBensinmack()
 
         // storeData(updatedList)
-        clearAll()
+        // clearAll()
 
         var localstorage = await getData()
 
@@ -66,6 +66,7 @@ class MapManager {
             return(this.calcGasStations)
 
         } else {
+
             const updatedStations = []
             localstorage = await fetchLatLng(localstorage)
             
@@ -88,11 +89,6 @@ class MapManager {
                     
                 }
             });
-            // console.log("local storage: " + this.calcGasStations.length)
-            // console.log("whole list: " + this.listOfGasStations.length)
-            // calcGasStations.forEach(stat =>{
-            //     console.log(stat)
-            // })
             return(this.calcGasStations)
         }
 
