@@ -3,31 +3,11 @@ import { StyleSheet, Text, View, PermissionsAndroid, Button, Image } from 'react
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import HomeView from './Views/HomeView';
 import AboutView from './Views/AboutView';
 
-// const requestLocationPermission = async () => {
-//   try {
-//     const granted = await PermissionsAndroid.request(
-//       PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-//       {
-//         title: "Bensinkollen permission",
-//         message: "Need your location thanks",
-//         buttonNeutral: "Not now",
-//         buttonNegative: "No",
-//         buttonPositive: "Yes"
-//       }
-//     );
-//     if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-//       // console.log("You can have my location");
-//     } else {
-//       // console.log("You can not have my location");
-//     }
-//   } catch(err){
-//     console.warn(err);
-//   }
-// };
 function LogoTitle() {
   return (
     <Image
@@ -46,8 +26,27 @@ export default function App() {
   return (
     <NavigationContainer>
       <Tab.Navigator>
-        <Tab.Screen name="Home" component={HomeView} Icons="grid" options={{ headerTitle: (props) => <LogoTitle {...props} /> }}/>
-        <Tab.Screen name="About us" component={AboutView} />
+        <Tab.Screen name="Home" component={HomeView} Icons="grid"
+        options={{
+
+          tabBarLabel: 'Home',
+
+          tabBarIcon: ({ color, size }) => {(<MaterialCommunityIcons name="home" color={color} size={size} /> )},
+
+          headerTitle: (props) => <LogoTitle {...props} />
+          
+        }}/>
+        <Tab.Screen
+        name="About us"
+        component={AboutView} 
+        options={{
+
+          tabBarLabel: 'About us',
+
+          tabBarIcon: ({ color, size }) => {(<MaterialCommunityIcons name="information" color={color} size={size} /> )},
+          
+        }}
+        />
       </Tab.Navigator>
     </NavigationContainer>
   );

@@ -7,7 +7,7 @@ import { mapManager } from '../ViewModels/MapManager';
 import { ApiManager, getBensinmack, fetchStations, apiManager } from '../ViewModels/ApiManager'
 import { settings } from '../Models/Settings';
 
-import DropdownComponent from './DropDownView';
+import FullMapView from './FullMapView';
 
 
 
@@ -19,7 +19,7 @@ export default class Home extends React.Component {
     return (
       
       <ScrollView style={{ marginTop: 0}}>
-      <DropdownComponent/>
+      <FullMapView/>
       </ScrollView>
       
       

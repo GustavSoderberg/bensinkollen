@@ -151,31 +151,6 @@ async function fetchLatLng(stations) {
 
 function createGasStation(json, station) {
 
-    var logo = require('../assets/logos/default_pin.png')
-    switch (station.name.toLowerCase()) {
-        case 'circle k':
-            logo = require('../assets/logos/circlek_pin.png')
-            break;
-        case 'ingo':
-            logo = require('../assets/logos/ingo_pin.png')
-            break;
-        case 'okq8':
-            logo = require('../assets/logos/okq8_pin.png')
-            break;
-        case 'st1':
-            logo = require('../assets/logos/st1_pin.png')
-            break;
-        case 'tanka':
-            logo = require('../assets/logos/tanka_pin.png')
-            break;
-        case 'preem':
-            logo = require('../assets/logos/preem_pin.png')
-            break;
-        default:
-            logo = require('../assets/logos/default_pin.png')
-            break;
-      }
-
     //TODO: We shall calculate distance between gas station and user here
     const station1 = GasStation(station.region, station.name, station.address, station.types, logo, json.results[0].geometry.location.lat, json.results[0].geometry.location.lng)
     // station.logo = logo
