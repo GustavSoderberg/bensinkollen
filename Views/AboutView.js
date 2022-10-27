@@ -1,7 +1,19 @@
+/**
+ * 
+ * AboutView
+ * 
+ * This is a view that displays information about our app creators
+ * 
+ * @authors
+ * Hampus B
+ * Karol Ö
+ * Oscar K
+ * Gustav S
+ * 
+ */
+
 import React, { useState } from 'react';
 import { SafeAreaView, Button, Alert,StyleSheet, Text, TextInput, View, Image } from 'react-native';
-import { mapManager } from '../ViewModels/MapManager';
-import { settings } from '../Models/Settings'
 
 export default class AboutView extends React.Component {
     render() {
