@@ -102,7 +102,6 @@ class MapManager {
         console.log("Comparing fetched stations with your localstorage")
         
         localstorage.forEach(lStation => {
-            
             for (let i = 0; i < henrik.length; i++) {
                 
                 if (henrik[i].address == lStation.address) {
