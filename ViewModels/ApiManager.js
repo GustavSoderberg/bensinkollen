@@ -111,14 +111,18 @@ async function fetchLatLng(stations) {
 
     const updatedStations = []
     var counter = 0
+    var failure = 0
     
     stations.forEach(station => {
-        
-        if(station.lat == "0" ) {
+
+        if(typeof station.address === 'undefined') {
+            failure++
+        }
+        else if(station.lat == "0" && typeof station.address !== 'undefined') {
 
             fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${station.name}%20${station.address}&key=${settings.ApiKeyGoogle}`)
             .then(json => json.json())
-            .then(json => {json.status != "ZERO_RESULTS" ? counter++ && updatedStations.push(createGasStation(json, station)) : console.log("ApiManager - fetchStations: One Google fetch returned no result")})
+            .then(json => {json.status != "ZERO_RESULTS" ? updatedStations.push(createGasStation(json, station) && counter++) : failure++ })
             .catch(error => console.log(error))
 
         }
@@ -131,12 +135,11 @@ async function fetchLatLng(stations) {
 
     });
 
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise(resolve => setTimeout(resolve, 2000));
 
     //for debugging
     var result = `Updated ${counter} of ${stations.length} stations with new coordinates from Geocoding API`
-    if ((stations.length - updatedStations.length) > 0 ) {result += ` (${(stations.length-updatedStations.length)} fetch(es) returned ZERO_RESULTS)`}
-    console.log(result)
+    if (failure > 0 ) {result += ` (${failure} fetch(es) returned ZERO_RESULTS or were undefined)`}
     
     return updatedStations
 
@@ -147,7 +150,10 @@ async function fetchLatLng(stations) {
 
 function createGasStation(json, station) {
 
-    const station1 = GasStation(station.region, station.name, station.address, station.types, station.logo, json.results[0].geometry.location.lat, json.results[0].geometry.location.lng)
-    return station1
+    if (typeof json.results[0] !== 'undefined') {
+        const station1 = GasStation(station.region, station.name, station.address, station.types, station.logo, json.results[0].geometry.location.lat, json.results[0].geometry.location.lng)
+        
+        return station1
+    }
 
  }

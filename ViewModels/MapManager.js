@@ -68,9 +68,10 @@ class MapManager {
         } else {
 
             const updatedStations = []
-            localstorage = await fetchLatLng(localstorage)
+            var mergedStorage = []
+            mergedStorage = await this.merge(localstorage, henrikhjelm)
             
-            await localstorage.forEach(station => {
+            await mergedStorage.forEach(station => {
                 const uStation = this.compare(station, henrikhjelm)
                 updatedStations.push(uStation)
                 
@@ -91,6 +92,36 @@ class MapManager {
             });
             return(this.calcGasStations)
         }
+
+    }
+
+    async merge(localstorage, henrik) {
+
+        var counter = 0
+
+        console.log("Comparing fetched stations with your localstorage")
+        
+        localstorage.forEach(lStation => {
+            
+            for (let i = 0; i < henrik.length; i++) {
+                
+                if (henrik[i].address == lStation.address) {
+
+                    henrik.splice(i, 1);
+                    counter++
+
+                }
+                
+            }
+            
+
+        });
+        
+        console.log(`${counter} matches were found already existing in your localstorage`)
+        const fetchGoogle = await fetchLatLng(henrik)
+        const mergedStations = localstorage.concat(fetchGoogle)
+
+        return mergedStations
 
     }
 
