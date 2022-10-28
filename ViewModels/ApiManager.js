@@ -108,7 +108,10 @@ async function getBensinmack() {
 export { getBensinmack }
 
 async function fetchLatLng(stations) {
-    
+
+    //The android emulator gets buggy/crashes/functions abnormally without taking breaks
+    await new Promise(resolve => setTimeout(resolve, 2000));
+
     const updatedStations = []
     var failure = 0
     
