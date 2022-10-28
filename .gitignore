@@ -14,4 +14,4 @@ web-build/
 .DS_Store
 
 # Settings
-# Models/Settings.js
+Models/Settings.js
